@@ -1,0 +1,46 @@
+.presencaNumero { display: flex; align-items: center; gap: 18px; padding-left: 25px; border-left: 1px solid #dbe5e6; }
+.presencaNumero strong { color: #087a85; font-size: 64px; font-weight: 500; line-height: 1; letter-spacing: -.07em; }
+.presencaNumero span { color: #4a6670; font-size: 12px; line-height: 1.6; }
+.painel { align-items: stretch; }
+.areaMapa { display: flex; flex-direction: column; background: #f6f9f8; }
+.areaMapa > svg { flex: 1; min-height: 0; }
+.lateral { background: #fff; }
+
+/* O foco acompanha a silhueta do estado, nunca seu retângulo delimitador. */
+.estado, .estado:focus, .estado:focus-visible { outline: none; }
+.estado { cursor: pointer; transition: filter 180ms ease, opacity 180ms ease; }
+.estado:hover { filter: brightness(1.12) saturate(1.08); }
+.estado:focus-visible { stroke: #00c8d2; stroke-width: 3; stroke-dasharray: 4 2; filter: brightness(1.12); }
+.amostraFoto { background: linear-gradient(135deg, #7d4f2c 0 34%, #3f783c 34% 68%, #d1b56d 68%); }
+
+.estadoVazio { display: grid; align-content: center; min-height: 260px; padding-block: 20px; }
+.estadoVazio > span { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 18px; color: #087a85; background: #e9f5f5; }
+.estadoVazio h3 { margin: 22px 0 0; color: #073747; font-size: 24px; font-weight: 700; letter-spacing: -.035em; }
+.estadoVazio p { max-width: 29ch; margin: 10px 0 0; color: #647d84; font-size: 14px; line-height: 1.7; }
+.destaqueLocal { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 20px; padding: 14px 16px; border-radius: 14px; color: #eafafa; background: #073747; }
+.destaqueLocal span { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; opacity: .68; }
+.destaqueLocal strong { color: #6ce8eb; font-size: 14px; }
+
+.regioesRegistradas { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 17px; font-size: 11px; }
+.regioesRegistradas span { color: #647d84; }
+.regioesRegistradas strong { color: #087a85; font-weight: 600; }
+.tituloLocais { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 22px; }
+.tituloLocais h4 { margin: 0; font-size: 13px; font-weight: 700; }
+.tituloLocais > span { display: grid; place-items: center; min-width: 26px; height: 23px; padding-inline: 6px; border-radius: 7px; color: #087a85; background: #eef6f5; font-size: 11px; font-weight: 700; }
+.busca { display: flex; align-items: center; gap: 9px; margin-top: 12px; padding: 10px 12px; border: 1px solid #dbe5e6; border-radius: 10px; color: #739093; }
+.busca:focus-within { border-color: #087a85; box-shadow: 0 0 0 2px #087a851c; }
+.busca input { min-width: 0; width: 100%; border: 0; outline: none; background: transparent; color: #073747; font-size: 13px; }
+.busca input::placeholder { color: #74888d; }
+.listaLocais { max-height: 180px; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-width: thin; scrollbar-color: #b7d0d0 transparent; margin-top: 10px; padding-right: 10px; border-radius: 3px; }
+.listaLocais ul { margin: 0; padding: 0; list-style: none; }
+.listaLocais li { display: flex; align-items: baseline; gap: 9px; padding: 8px 0; border-bottom: 1px solid #eef2f1; color: #4a6670; font-size: 13px; line-height: 1.55; }
+.listaLocais li:last-child { border-bottom: 0; }
+.listaLocais svg { position: relative; top: 2px; flex-shrink: 0; color: #087a85; }
+.listaRecolhida { margin-top: 18px; border-top: 1px solid #e4ecec; color: #4a6670; font-size: 12px; }
+.listaRecolhida summary { padding: 15px 0 5px; font-weight: 700; cursor: pointer; }
+.aplicacoes { margin-top: 16px; color: #4a6670; font-size: 11px; }
+.aplicacoes summary { padding-block: 5px; font-weight: 650; cursor: pointer; }
+
+@media (max-width: 1023px) { .areaMapa > svg { flex: none; } .lateral { border-top: 1px solid #dbe5e6; } }
+@media (max-width: 560px) { .presencaNumero { gap: 13px; padding-left: 17px; } .presencaNumero strong { font-size: 45px; } .busca input { font-size: 16px; } .listaLocais { max-height: 245px; } }
+@media (prefers-reduced-motion: reduce) { .estado { transition: none; } }

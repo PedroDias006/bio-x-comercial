@@ -1,0 +1,36 @@
+.suporte { position: fixed; z-index: 180; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 11px; }
+.gatilho { position: relative; order: 2; width: 82px; height: 82px; flex: 0 0 auto; overflow: hidden; border: 3px solid #fff; border-radius: 50%; background: linear-gradient(145deg,#dff9fb,#00c8d2); box-shadow: 0 13px 34px #052f3e42, 0 0 0 5px #00c8d21a; cursor: pointer; transition: transform 200ms ease, box-shadow 200ms ease; }
+.gatilho:hover { transform: translateY(-3px); box-shadow: 0 17px 38px #052f3e4d, 0 0 0 7px #00c8d224; }
+.gatilho img { object-fit: contain; object-position: center 7px; transform: scale(1.22); transform-origin: center top; }
+.status { position: absolute; z-index: 3; right: 4px; top: 5px; width: 13px; height: 13px; border: 2px solid white; border-radius: 50%; background: #38c978; box-shadow: 0 0 0 3px #38c97822; }
+.fechar { position: absolute; z-index: 4; inset: auto 4px 5px auto; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; color: white; background: #073747d9; }
+.convite { order: 1; padding: 10px 14px; border: 1px solid #fff; border-radius: 999px; color: #123b48; background: #ffffffed; box-shadow: 0 8px 26px #173d491c; font-size: 12px; font-weight: 700; opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(8px); transition: opacity 180ms ease, visibility 180ms ease, transform 180ms ease; }
+.gatilho:hover + .convite, .gatilho:focus-visible + .convite { opacity: 1; visibility: visible; transform: translateX(0); }
+.chat { position: absolute; right: 0; bottom: 96px; display: flex; flex-direction: column; width: min(372px, calc(100vw - 28px)); height: min(590px, calc(100vh - 135px)); overflow: hidden; border: 1px solid #d8e8eb; border-radius: 24px; background: #fff; box-shadow: 0 24px 70px #062f3e38; animation: abrir 240ms ease both; }
+.cabecalho { display: flex; align-items: center; gap: 11px; min-height: 76px; padding: 12px 14px; color: white; background: linear-gradient(125deg,#073747,#086d7b); }
+.miniatura { position: relative; width: 46px; height: 46px; flex: 0 0 auto; overflow: hidden; border: 2px solid #7aeaf0; border-radius: 50%; background: #dff9fb; }
+.miniatura img { object-fit: contain; transform: scale(1.2); transform-origin: center top; }
+.cabecalho div { min-width: 0; }
+.cabecalho strong { display: block; font-size: 14px; }
+.cabecalho span:not(.miniatura) { display: flex; align-items: center; gap: 6px; margin-top: 3px; color: #c4e2e7; font-size: 10px; }
+.cabecalho i { width: 7px; height: 7px; border-radius: 50%; background: #45df8b; }
+.cabecalho button { display: grid; place-items: center; width: 38px; height: 38px; margin-left: auto; border-radius: 50%; color: white; cursor: pointer; }
+.cabecalho button:hover { background: #ffffff14; }
+.conversa { flex: 1; overflow-y: auto; padding: 18px 15px; background: linear-gradient(180deg,#f4f8f9,#fff 55%); scrollbar-width: thin; }
+.mensagemBot, .mensagemVisitante { display: flex; align-items: flex-start; gap: 7px; margin-bottom: 11px; }
+.mensagemBot > svg { flex: 0 0 auto; margin-top: 8px; color: #00899a; }
+.mensagemBot p, .mensagemVisitante p { max-width: 88%; margin: 0; padding: 10px 12px; border-radius: 15px; font-size: 12px; line-height: 1.55; }
+.mensagemBot p { border: 1px solid #deeaed; border-bottom-left-radius: 4px; color: #294d58; background: white; }
+.mensagemVisitante { justify-content: flex-end; }
+.mensagemVisitante p { border-bottom-right-radius: 4px; color: #063442; background: #bfeff2; }
+.opcoes { display: grid; gap: 7px; margin: 14px 0 5px 22px; }
+.opcoes button { min-height: 40px; padding: 9px 12px; border: 1px solid #bcdde2; border-radius: 12px; color: #076477; background: #fff; cursor: pointer; font-size: 11px; font-weight: 650; text-align: left; transition: background 160ms, transform 160ms; }
+.opcoes button:hover { background: #e5f8fa; transform: translateX(2px); }
+.opcoes .mais { border-style: dashed; color: #58737b; }
+.rodapeChat { display: flex; gap: 8px; padding: 12px; border-top: 1px solid #dce8ea; background: #fff; }
+.rodapeChat button { display: grid; place-items: center; width: 42px; height: 42px; flex: 0 0 auto; border: 1px solid #d8e5e7; border-radius: 12px; color: #53717a; cursor: pointer; }
+.rodapeChat a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; flex: 1; border-radius: 12px; color: white; background: #087e90; font-size: 12px; font-weight: 700; }
+.rodapeChat a:hover { background: #056b7b; }
+@keyframes abrir { from { opacity: 0; transform: translateY(12px) scale(.97); transform-origin: bottom right; } to { opacity: 1; transform: none; } }
+@media (max-width: 560px) { .suporte { right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); } .gatilho { width: 70px; height: 70px; } .convite { display: none; } .chat { right: 0; bottom: 82px; width: calc(100vw - 24px); height: min(570px, calc(100dvh - 110px)); border-radius: 20px; } }
+@media (prefers-reduced-motion: reduce) { .chat, .convite, .gatilho { animation: none; transition: none; } }

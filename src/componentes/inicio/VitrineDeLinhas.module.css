@@ -1,0 +1,30 @@
+/* Uma transição contínua do tom do céu para a foto, sem película escura.
+   A foto mantém o mesmo tamanho; apenas sua transparência muda no alto. */
+.fotoIntegrada {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 16%,
+    rgb(0 0 0 / 3%) 24%,
+    rgb(0 0 0 / 18%) 30%,
+    rgb(0 0 0 / 48%) 36%,
+    rgb(0 0 0 / 78%) 42%,
+    #000 50%
+  );
+}
+
+/* Nos cartões menores, o texto ocupa uma fração maior da altura. */
+@media (max-width: 639px) {
+  .fotoIntegrada {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 24%,
+      rgb(0 0 0 / 4%) 30%,
+      rgb(0 0 0 / 20%) 36%,
+      rgb(0 0 0 / 50%) 42%,
+      rgb(0 0 0 / 83%) 48%,
+      #000 55%
+    );
+  }
+}

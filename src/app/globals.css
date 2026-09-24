@@ -1,0 +1,577 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Manrope";
+  src: url("/fonts/manrope-latin-variable.woff2") format("woff2-variations");
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+/* ============================================================
+   TOKENS DA MARCA
+   Tirados do material recebido: o azul-petróleo e o turquesa do
+   logo e o verde da Agricultura Única.
+   Nenhum componente escreve hex na mão — todos puxam daqui.
+   ============================================================ */
+:root {
+  --fonte-sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    Arial, sans-serif;
+
+  /* Azul-petróleo institucional, do escuro ao claro */
+  --biox-950: #041e2b;
+  --biox-900: #073747;
+  --biox-800: #0a5266;
+  --biox-700: #12707f;
+
+  /* Turquesa — é o X do logo. A cor de destaque do site. */
+  --biox-turquesa: #00c8d2;
+  --biox-turquesa-claro: #6ce8eb;
+  --biox-turquesa-escuro: #087a85;
+
+  /* Cores das sub-marcas. Usadas só dentro da linha correspondente. */
+  --verde-agro: #2e7d32;
+  --verde-agro-claro: #4caf50;
+
+  /* Superfícies. O fundo tem um leve viés frio para conversar com o
+     turquesa — cinza puro deixaria a página com cara de não-escolhida. */
+  --fundo: #f4f7f7;
+  --superficie: #ffffff;
+  --texto: #06232b;
+  --texto-suave: #4a6670;
+  --linha: #dbe5e6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* A página só rola na vertical.
+   `clip` em vez de `hidden` porque `hidden` transformaria o html num
+   contêiner de rolagem e quebraria qualquer `position: sticky` de quem
+   está dentro. O `hidden` antes é a reserva para navegador que não
+   conhece `clip`. */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
+
+/* O `position: relative` aqui não é decorativo: sem ele, elemento
+   `position: absolute` sem ancestral posicionado toma o viewport como
+   bloco-contêiner e escapa do `overflow-x: clip` acima — abrindo rolagem
+   lateral no celular. Com o relative, o body vira o bloco-contêiner
+   deles e a trava finalmente alcança. */
+body {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--fonte-sans);
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Precisa ficar em @layer base: CSS sem camada vence qualquer utilitário
+   do Tailwind, e uma regra solta anularia todo `max-w-*` em imagem. */
+@layer base {
+  img,
+  video,
+  svg {
+    max-width: 100%;
+  }
+}
+
+/* O Safari do iPhone dá zoom na página inteira quando o campo que recebe
+   foco tem fonte menor que 16px — e não desfaz o zoom depois. */
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+::selection {
+  background: var(--biox-turquesa);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 3px solid var(--biox-turquesa);
+  outline-offset: 3px;
+}
+
+.link-pular {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: var(--biox-turquesa);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 200ms ease;
+}
+
+.link-pular:focus-visible {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   CABEÇALHO DE SEÇÃO
+   O trio olho + título + apoio que abre toda seção depois do
+   hero. Definido uma vez só para os tamanhos não divergirem de
+   cópia em cópia.
+
+   Em @layer components de propósito: utilitário do Tailwind
+   continua vencendo, então dá para ajustar um caso pontual sem
+   brigar com !important.
+   ============================================================ */
+@layer components {
+  .secao-olho {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: var(--biox-turquesa-escuro);
+  }
+
+  .secao-titulo {
+    text-wrap: balance;
+    font-size: 1.875rem;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--biox-950);
+  }
+
+  @media (min-width: 640px) {
+    .secao-titulo {
+      font-size: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .secao-titulo {
+      font-size: 2.875rem;
+    }
+  }
+
+  .secao-apoio {
+    font-size: 1rem;
+    line-height: 1.75rem;
+    color: var(--texto-suave);
+  }
+}
+
+/* ============================================================
+   BARRA DE NAVEGAÇÃO
+   A barra tem só dois estados (topo e flutuante). Eles são duas
+   paradas de CSS: o JS apenas liga/desliga um atributo quando o
+   scroll cruza o limiar, sem interpolar nada por frame.
+   ============================================================ */
+:root {
+  --nav-altura: 100px;
+  --nav-largura: 100%;
+  --nav-padding: 20px;
+  --nav-raio: 0px;
+  --nav-sombra: 0 1px 0 rgba(6, 35, 43, 0.06);
+  /* O logo tem a palavra MICROORGANISMOS embaixo, em corpo pequeno: se ele
+     encolhe demais, essa linha vira um borrão. Por isso ocupa por volta de
+     60% da altura da barra, e não os ~45% de um logo só de símbolo. */
+  --logo-altura: 78px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --nav-altura: 120px;
+    --nav-padding: 32px;
+    --logo-altura: 98px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nav-padding: 48px;
+  }
+}
+
+html[data-nav-rolado="true"] {
+  --nav-altura: 88px;
+  --nav-largura: calc(100% - 24px);
+  --nav-padding: 16px;
+  --nav-raio: 18px;
+  --nav-sombra: 0 18px 50px rgba(6, 35, 43, 0.16);
+  --logo-altura: 68px;
+}
+
+@media (min-width: 640px) {
+  html[data-nav-rolado="true"] {
+    --nav-altura: 100px;
+    --nav-largura: min(calc(100% - 40px), 1280px);
+    --nav-padding: 24px;
+    --logo-altura: 80px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html[data-nav-rolado="true"] {
+    --nav-altura: 104px;
+    --nav-largura: min(calc(100% - 40px), 1400px);
+    --nav-padding: 32px;
+    --logo-altura: 84px;
+  }
+}
+
+/* Mesma curva e duração da .nav-casca, para o logo e a barra encolherem
+   como uma coisa só. */
+.logo-nav {
+  height: var(--logo-altura);
+  width: auto;
+  max-width: none;
+  transform: scale(1.2);
+  transition: height 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-casca {
+  width: var(--nav-largura);
+  height: var(--nav-altura);
+  padding-inline: var(--nav-padding);
+  border-radius: var(--nav-raio);
+  box-shadow: var(--nav-sombra);
+  transition:
+    width 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    padding-inline 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================================
+   ATMOSFERAS
+   Fundos das seções escuras. Ficam aqui porque são gradientes
+   longos demais para virar string de classe utilitária.
+   ============================================================ */
+.atmosfera-hero {
+  background:
+    radial-gradient(circle at 68% 12%, rgba(31, 182, 193, 0.28), transparent 42%),
+    radial-gradient(circle at 12% 78%, rgba(14, 90, 107, 0.42), transparent 46%),
+    linear-gradient(128deg, #06232b 0%, #0b3b47 52%, #0e5a6b 100%);
+}
+
+.atmosfera-escura {
+  background: linear-gradient(160deg, #06232b 0%, #0b3b47 100%);
+}
+
+/* ============================================================
+   HERO — DO MICRO AO CAMPO
+   A composição não simula uma paisagem: enquadra três fotografias reais
+   do acervo como escalas diferentes da mesma tecnologia.
+   ============================================================ */
+.hero-biologia {
+  background:
+    radial-gradient(circle at 70% 18%, rgba(31, 182, 193, 0.22), transparent 27%),
+    radial-gradient(circle at 6% 92%, rgba(18, 112, 127, 0.35), transparent 32%),
+    linear-gradient(135deg, #041b22 0%, #062d37 52%, #0a4653 100%);
+}
+
+.hero-brilho {
+  background: linear-gradient(108deg, rgba(3, 20, 25, 0.18) 0 48%, transparent 72%);
+}
+
+.hero-palavra-viva {
+  color: var(--biox-turquesa-claro);
+  background: linear-gradient(180deg, #b7fbff 0%, #57d3db 45%, #1fb6c1 100%);
+  background-clip: text;
+  filter: drop-shadow(0 10px 28px rgba(31, 182, 193, 0.17));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-foto-principal::before {
+  position: absolute;
+  z-index: 2;
+  inset: 1rem 1rem auto auto;
+  width: 0.6rem;
+  height: 0.6rem;
+  content: "";
+  border-radius: 999px;
+  background: var(--biox-turquesa-claro);
+  box-shadow: 0 0 0 0.4rem rgba(87, 211, 219, 0.16);
+}
+
+.hero-microscopio::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-colagem {
+    transform: rotate(0.7deg);
+  }
+}
+
+/* ============================================================
+   CADERNO DE CAMPO
+   Uma grade assimétrica dá hierarquia às imagens sem recortá-las todas no
+   mesmo cartão. No celular a sequência volta a uma coluna legível.
+   ============================================================ */
+.campo-em-foco {
+  background:
+    linear-gradient(rgba(14, 90, 107, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 90, 107, 0.045) 1px, transparent 1px),
+    #eef4f4;
+  background-size: 56px 56px;
+}
+
+.campo-grade {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .campo-grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .campo-grade {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: 250px 250px;
+  }
+
+  .campo-foto-grande {
+    grid-column: span 7;
+    grid-row: span 2;
+  }
+
+  .campo-foto-alta {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+
+  .campo-foto-media {
+    grid-column: span 2;
+  }
+}
+
+/* Véu do hero.
+   A foto de canavial é clara (céu azul, cana verde) e não sustenta texto
+   branco sozinha. São três camadas somadas:
+   1. reforço à direita, onde mora o texto — é o que garante o contraste;
+   2. escurecimento do rodapé da foto, para o agente não se perder no solo;
+   3. um véu geral leve, que recua a paisagem sem apagá-la. */
+.veu-hero {
+  background:
+    linear-gradient(
+      95deg,
+      rgba(6, 35, 43, 0.15) 0%,
+      rgba(6, 35, 43, 0.3) 38%,
+      rgba(6, 35, 43, 0.76) 72%,
+      rgba(6, 35, 43, 0.84) 100%
+    ),
+    linear-gradient(to top, rgba(6, 35, 43, 0.6) 0%, transparent 45%),
+    rgba(6, 35, 43, 0.22);
+}
+
+/* Abaixo de lg o agente some e o texto ocupa a largura toda: o véu passa a
+   precisar cobrir a tela inteira, não só a faixa da direita. */
+@media (max-width: 1023px) {
+  .veu-hero {
+    background:
+      linear-gradient(to top, rgba(6, 35, 43, 0.82) 0%, rgba(6, 35, 43, 0.62) 60%, rgba(6, 35, 43, 0.5) 100%),
+      rgba(6, 35, 43, 0.2);
+  }
+}
+
+/* Malha técnica de fundo — evoca papel milimetrado de laboratório.
+   A máscara faz a malha sumir para a direita, para não competir com
+   o texto do hero. */
+.malha-tecnica {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(100deg, black, transparent 72%);
+}
+
+/* Campo de pontos — referência à colônia em placa de Petri. */
+.campo-de-pontos {
+  background-image: radial-gradient(
+    circle,
+    rgba(31, 182, 193, 0.55) 0 2px,
+    transparent 2.5px
+  );
+  background-size: 16px 16px;
+}
+
+/* ============================================================
+   ROLAGEM HORIZONTAL
+   Trilhos que rolam na rolagem nativa do navegador. Aqui ficam
+   as duas regras que o Tailwind não escreve: sumir com a barra e
+   alinhar o trilho à largura do Conteiner.
+   ============================================================ */
+.sem-barra {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.sem-barra::-webkit-scrollbar {
+  display: none;
+}
+
+/* O trilho atravessa a tela toda, mas o primeiro cartão precisa nascer
+   alinhado com o título — que vive dentro de um Conteiner de 80rem. O
+   `max()` resolve os dois casos: abaixo de 84rem o gutter é o do
+   Conteiner; acima, é a sobra lateral. */
+.trilho {
+  padding-inline: 1.25rem;
+  scroll-padding-inline: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .trilho {
+    --trilho-gutter: max(2rem, calc((100% - 80rem) / 2 + 2rem));
+    padding-inline: var(--trilho-gutter);
+    scroll-padding-inline: var(--trilho-gutter);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Vitrine de produtos: nome, benefício e uma única ação. */
+.hero-produtos {
+  background: radial-gradient(ellipse at 90% 10%, rgba(46,125,50,.035), transparent 45%), linear-gradient(120deg, #fff, #f5f6f5);
+}
+.hero-produto-slide { position: relative; display: flex; align-items: center; min-height: clamp(560px, 46vw, 730px); animation: produto-entrada 450ms ease-out; }
+.hero-produto-arte { position: absolute; inset: 0; pointer-events: none; }
+.hero-produto-conteudo { position: relative; margin-left: 55%; width: 41%; max-width: 650px; padding: 64px 24px 80px 0; text-align: center; }
+.hero-produto-titulo { margin: 0; color: var(--biox-950); font-size: clamp(2.5rem, 4.2vw, 4.5rem); font-weight: 750; letter-spacing: -.045em; line-height: 1.08; text-wrap: balance; }
+.hero-produto-subtitulo { margin: 18px 0 0; color: var(--biox-950); font-size: clamp(1.25rem, 1.8vw, 1.75rem); font-weight: 500; letter-spacing: -.025em; line-height: 1.3; text-wrap: balance; }
+.hero-produto-descricao { max-width: 36ch; margin: 16px auto 0; color: var(--texto-suave); font-size: 1rem; line-height: 1.6; text-wrap: pretty; }
+.hero-produto-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; margin-top: 28px; padding: 12px 26px; border-radius: 999px; background: var(--biox-950); color: white; font-size: 14px; font-weight: 600; line-height: 1.4; transition: background 180ms ease, transform 180ms ease; }
+.hero-produto-cta:hover { background: var(--verde-agro); transform: translateY(-1px); }
+.hero-produto-controles { position: absolute; bottom: 24px; left: 55%; width: 41%; justify-content: center; }
+@keyframes produto-entrada { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 767px) {
+  .hero-produto-slide { flex-direction: column; min-height: 0; }
+  .hero-produto-arte { position: relative; align-self: flex-start; width: 175%; height: clamp(285px, 74vw, 480px); margin-top: 16px; }
+  .hero-produto-conteudo { margin-left: 0; width: 100%; max-width: none; padding: 28px 24px 44px; }
+  .hero-produto-titulo { font-size: clamp(2.25rem, 8.5vw, 3.5rem); }
+  .hero-produto-subtitulo { margin-top: 12px; font-size: 1.25rem; }
+  .hero-produto-descricao { margin-top: 12px; }
+  .hero-produto-cta { margin-top: 24px; }
+  .hero-produto-controles { position: relative; left: auto; bottom: auto; width: 100%; padding: 0 24px 24px; }
+}
+
+.hero-saneamento .hero-produto-arte img { object-fit: cover; object-position: left center; }
+.hero-saneamento .hero-produto-cta { background: var(--biox-turquesa-escuro); }
+.hero-saneamento .hero-produto-cta:hover { background: var(--biox-950); }
+@media (max-width: 767px) {
+  .hero-saneamento .hero-produto-arte img { object-fit: contain; object-position: left bottom; }
+}
+
+.nav-marca { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: calc(var(--logo-altura) * 2); height: var(--logo-altura); overflow: hidden; transition: width 420ms ease, height 420ms ease; }
+.nav-casca { gap: 24px; }
+@media (min-width: 1024px) and (max-width: 1199px) { :root { --nav-padding: 24px; } }
+
+.mapa-controle { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--linha); border-radius: 10px; background: white; color: var(--biox-950); cursor: pointer; }
+.mapa-controle:hover { background: var(--linha); }
+.mapa-controle:disabled { opacity: .35; cursor: default; }
+
+/* Direção cromática das 19 referências institucionais recebidas em 15/09/2026. */
+:root {
+  --verde-vivo: #8bd34f;
+  --dourado: #e5c667;
+  --painel-escuro: #062b39;
+}
+.secao-institucional {
+  --biox-950: #f0f8f9;
+  --texto-suave: #b9ced5;
+  --biox-turquesa-escuro: #53dce2;
+  --linha: #24505e;
+  color: #f0f8f9;
+  background: radial-gradient(ellipse at 85% 10%, #0a526655, transparent 55%), #041e2b;
+}
+.campo-em-foco.secao-institucional {
+  background: linear-gradient(#53dce209 1px, transparent 1px), linear-gradient(90deg, #53dce209 1px, transparent 1px), #062b39;
+  background-size: 56px 56px;
+}
+.campo-etapa { background: var(--painel-escuro); }
+.secao-institucional .secao-olho { color: #53dce2; }
+.hero-produtos { background: #041e2b; color: #f0f8f9; }
+.hero-produto-arte::after {
+  position: absolute; inset: 0; content: '';
+  background: linear-gradient(90deg, transparent 22%, #041e2b44 38%, #041e2bf5 56%, #041e2b 100%);
+}
+.hero-produto-titulo { color: #f0f8f9; }
+.hero-produto-subtitulo { color: var(--biox-turquesa-claro); }
+.hero-produto-descricao { color: #bed2d9; }
+.hero-produto-cta, .hero-saneamento .hero-produto-cta { background: var(--biox-turquesa); color: #041e2b; }
+.hero-produto-cta:hover, .hero-saneamento .hero-produto-cta:hover { background: var(--biox-turquesa-claro); }
+.hero-produto-controles > button { background: #0b3544; border-color: #35606d; color: #eaf8fa; }
+.hero-produto-controles [aria-current='true'] span { background: var(--biox-turquesa); }
+.hero-produto-controles [aria-current='false'] span { background: #52717a; }
+.nav-institucional { background: #041e2bf5; --texto-suave: #c3d8df; --biox-950: #f0f8f9; --biox-turquesa-escuro: #53dce2; --linha: #345461; }
+.nav-institucional .nav-acao { color: #041e2b; }
+.atmosfera-hero { background: radial-gradient(ellipse at 75% 10%, #007d8955, transparent 55%), linear-gradient(128deg, #041e2b, #073747); }
+.atmosfera-escura { background: linear-gradient(160deg, #031721, #062b39); }
+@media (max-width: 767px) {
+  .hero-produto-arte::after { background: linear-gradient(180deg, transparent 55%, #041e2b); }
+}
+
+/* Acentos de natureza e produção presentes no material institucional. */
+.secao-institucional li:nth-child(1) > svg, .secao-institucional li:nth-child(2) > svg { color: var(--verde-vivo); }
+.secao-institucional li:nth-child(3) > svg { color: var(--dourado); }
+
+
+/* Cabeçalho claro integrado à nova hero da página inicial. */
+.nav-clara { background: #f4f6f7ed; --texto-suave: #46616c; --biox-950: #123542; --biox-turquesa-escuro: #087e90; --linha: #d7e2e6; }
+#tecnologia-titulo { scroll-margin-top: 145px; }
+@media (max-width: 639px) {
+  .nav-casca .nav-acao { display: none; }
+}

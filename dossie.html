@@ -1,0 +1,585 @@
+<title>Dossiê BIO-X</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+:root{
+  --ground:#F2F5F5;
+  --surface:#FFFFFF;
+  --surface-2:#E9EFEF;
+  --ink:#0B1F27;
+  --ink-2:#3D5560;
+  --ink-3:#6E858E;
+  --line:#CBD8DA;
+  --line-strong:#9FB4B8;
+  --petrol:#0E5A6B;
+  --turq:#128794;
+  --turq-soft:#DCF0F1;
+  --warn:#8A5A06;
+  --warn-bg:#FBF1DC;
+  --warn-line:#DDBB74;
+  --agro:#2E6B34;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#08151A;
+    --surface:#0F2027;
+    --surface-2:#162C34;
+    --ink:#DFEBEC;
+    --ink-2:#9CB3B9;
+    --ink-3:#71888F;
+    --line:#223A42;
+    --line-strong:#33525C;
+    --petrol:#4FB3C4;
+    --turq:#3FC9D6;
+    --turq-soft:#12303550;
+    --warn:#E8BC6A;
+    --warn-bg:#241C0C;
+    --warn-line:#5C4718;
+    --agro:#6FBF77;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#08151A;
+  --surface:#0F2027;
+  --surface-2:#162C34;
+  --ink:#DFEBEC;
+  --ink-2:#9CB3B9;
+  --ink-3:#71888F;
+  --line:#223A42;
+  --line-strong:#33525C;
+  --petrol:#4FB3C4;
+  --turq:#3FC9D6;
+  --turq-soft:#12303550;
+  --warn:#E8BC6A;
+  --warn-bg:#241C0C;
+  --warn-line:#5C4718;
+  --agro:#6FBF77;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif;
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 96px}
+
+/* ---------- cover sheet ---------- */
+.cover{
+  border:1px solid var(--line-strong);
+  background:var(--surface);
+  margin:32px 0 56px;
+}
+.cover-top{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:16px;
+  padding:20px 28px;border-bottom:1px solid var(--line);
+}
+.mark{
+  font-family:Archivo,system-ui,sans-serif;font-weight:800;
+  font-size:26px;letter-spacing:.02em;color:var(--ink);
+}
+.mark span{color:var(--turq)}
+.mark small{
+  display:block;font-family:"IBM Plex Mono",monospace;font-weight:500;
+  font-size:9px;letter-spacing:.42em;color:var(--ink-3);margin-top:2px;
+}
+.cover-kind{
+  margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
+}
+.cover-body{padding:36px 28px 30px}
+h1{
+  font-family:Archivo,system-ui,sans-serif;font-weight:800;
+  font-size:clamp(34px,5.4vw,58px);line-height:1.02;letter-spacing:-.025em;
+  margin:0 0 18px;text-wrap:balance;
+}
+.lede{
+  font-size:19px;color:var(--ink-2);max-width:62ch;margin:0 0 32px;
+}
+.meta{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  border-top:1px solid var(--line);
+}
+.meta div{
+  padding:14px 0;border-bottom:1px solid var(--line);
+  border-right:1px solid var(--line);padding-right:18px;
+}
+.meta div:last-child{border-right:none}
+.meta dt,.meta .k{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:4px;
+}
+.meta .v{font-family:Archivo,sans-serif;font-weight:600;font-size:15px}
+
+/* ---------- stat row ---------- */
+.stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1px;background:var(--line);border:1px solid var(--line);margin:0 0 56px;
+}
+.stat{background:var(--surface);padding:22px 20px}
+.stat b{
+  display:block;font-family:Archivo,sans-serif;font-weight:800;
+  font-size:clamp(26px,3.6vw,38px);letter-spacing:-.03em;color:var(--turq);
+  line-height:1;margin-bottom:8px;font-variant-numeric:tabular-nums;
+}
+.stat span{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-2);line-height:1.5;display:block;
+}
+
+/* ---------- layout ---------- */
+.cols{display:grid;grid-template-columns:1fr;gap:48px}
+@media(min-width:1000px){
+  .cols{grid-template-columns:210px minmax(0,1fr);gap:56px;align-items:start}
+  nav.toc{position:sticky;top:24px}
+}
+nav.toc ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+nav.toc li{border-bottom:1px solid var(--line)}
+nav.toc a{
+  display:flex;gap:10px;padding:9px 2px;text-decoration:none;color:var(--ink-2);
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;line-height:1.45;
+}
+nav.toc a:hover{color:var(--turq)}
+nav.toc a:focus-visible{outline:2px solid var(--turq);outline-offset:2px}
+nav.toc .n{color:var(--ink-3);font-variant-numeric:tabular-nums}
+
+section{margin:0 0 64px;scroll-margin-top:20px}
+h2{
+  font-family:Archivo,sans-serif;font-weight:800;font-size:clamp(23px,3vw,31px);
+  letter-spacing:-.02em;line-height:1.12;margin:0 0 6px;text-wrap:balance;
+}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--turq);display:block;margin-bottom:10px;
+}
+h2+.rule{height:2px;background:var(--ink);margin:0 0 26px;width:44px}
+h3{
+  font-family:Archivo,sans-serif;font-weight:700;font-size:19px;
+  letter-spacing:-.01em;margin:36px 0 10px;
+}
+h4{
+  font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:11.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+  margin:26px 0 10px;
+}
+p{margin:0 0 16px;max-width:68ch}
+ul{margin:0 0 18px;padding-left:20px;max-width:68ch}
+li{margin-bottom:5px}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a{color:var(--turq)}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:0 0 24px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:460px;background:var(--surface)}
+th{
+  text-align:left;font-family:"IBM Plex Mono",monospace;font-weight:600;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+  padding:11px 14px;border-bottom:1px solid var(--line-strong);vertical-align:bottom;
+  background:var(--surface-2);
+}
+td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:none}
+td.num{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;color:var(--ink-3);white-space:nowrap}
+.sci{font-style:italic}
+
+/* ---------- quote ---------- */
+blockquote{
+  margin:0 0 22px;padding:18px 22px;background:var(--surface);
+  border:1px solid var(--line);border-left:3px solid var(--turq);
+  font-size:17.5px;color:var(--ink);max-width:68ch;
+}
+blockquote p:last-child{margin-bottom:0}
+blockquote cite{
+  display:block;margin-top:10px;font-style:normal;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);
+}
+
+/* ---------- gap / risk callout ---------- */
+.gap{
+  border:1px solid var(--warn-line);background:var(--warn-bg);
+  padding:16px 20px 14px;margin:0 0 24px;max-width:68ch;
+}
+.gap b{
+  display:block;font-family:"IBM Plex Mono",monospace;font-weight:600;
+  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--warn);margin-bottom:7px;
+}
+.gap p{margin:0;font-size:15.5px;color:var(--ink)}
+
+/* ---------- vertical cards ---------- */
+.verts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:0 0 28px}
+.vert{background:var(--surface);padding:18px 20px}
+.vert h5{
+  font-family:Archivo,sans-serif;font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:-.01em;
+}
+.vert p{font-size:14px;color:var(--ink-2);margin:0;max-width:none}
+.tag{
+  display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;
+  letter-spacing:.14em;text-transform:uppercase;padding:2px 7px;
+  border:1px solid var(--line-strong);color:var(--ink-3);margin-bottom:9px;
+}
+
+/* ---------- swatches ---------- */
+.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:0 0 24px}
+.sw div{background:var(--surface);padding:0 0 12px}
+.sw i{display:block;height:56px}
+.sw b{display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;padding:9px 12px 2px;font-weight:500}
+.sw span{display:block;font-size:12.5px;color:var(--ink-3);padding:0 12px;line-height:1.4}
+
+/* ---------- tree ---------- */
+pre{
+  background:var(--surface);border:1px solid var(--line);padding:18px 20px;
+  overflow-x:auto;font-family:"IBM Plex Mono",monospace;font-size:12.5px;
+  line-height:1.7;margin:0 0 24px;color:var(--ink-2);
+}
+footer{
+  border-top:1px solid var(--line-strong);margin-top:24px;padding-top:20px;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="cover">
+  <div class="cover-top">
+    <div class="mark">BIO<span>X</span><small>MICROORGANISMOS</small></div>
+    <div class="cover-kind">Levantamento de marca · Interno</div>
+  </div>
+  <div class="cover-body">
+    <h1>Dossiê BIO-X</h1>
+    <p class="lede">Tudo que foi possível extrair de 24 arquivos recebidos por WhatsApp — 18 vídeos e 6 folders — para servir de base ao novo site.</p>
+    <div class="meta">
+      <div><span class="k">Fonte</span><span class="v">24 arquivos · 26/08/2026</span></div>
+      <div><span class="k">Vídeo analisado</span><span class="v">38 min · 18 peças</span></div>
+      <div><span class="k">Método</span><span class="v">Frames + legendas</span></div>
+      <div><span class="k">Compilado</span><span class="v">27/08/2026</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat"><b>+30</b><span>anos de experiência<br>no agronegócio</span></div>
+  <div class="stat"><b>25%</b><span>de economia<br>com o 10SEC</span></div>
+  <div class="stat"><b>7733254</b><span>registro<br>IBAMA / MMA</span></div>
+  <div class="stat"><b>7</b><span>linhas de produto<br>identificadas</span></div>
+</div>
+
+<div class="cols">
+
+<nav class="toc" aria-label="Seções">
+  <ol>
+    <li><a href="#s1"><span class="n">01</span> Identidade</a></li>
+    <li><a href="#s2"><span class="n">02</span> Slogans</a></li>
+    <li><a href="#s3"><span class="n">03</span> Missão e valores</a></li>
+    <li><a href="#s4"><span class="n">04</span> Linhas de negócio</a></li>
+    <li><a href="#s5"><span class="n">05</span> Clientes</a></li>
+    <li><a href="#s6"><span class="n">06</span> Depoimentos</a></li>
+    <li><a href="#s7"><span class="n">07</span> Mídia e eventos</a></li>
+    <li><a href="#s8"><span class="n">08</span> Sistema visual</a></li>
+    <li><a href="#s9"><span class="n">09</span> Inventário</a></li>
+    <li><a href="#s10"><span class="n">10</span> Lacunas</a></li>
+    <li><a href="#s11"><span class="n">11</span> Arquitetura do site</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="s1">
+  <span class="eyebrow">Seção 01</span>
+  <h2>Identidade da empresa</h2><div class="rule"></div>
+
+  <div class="tw"><table>
+    <tr><th>Campo</th><th>Valor</th></tr>
+    <tr><td>Nome / assinatura</td><td><strong>BIO-X Microorganismos</strong></td></tr>
+    <tr><td>Site</td><td>www.bioxmicroorganismos.com.br</td></tr>
+    <tr><td>E-mail</td><td>biox@bioxmicroorganismos.com.br</td></tr>
+    <tr><td>Telefone</td><td class="num">(31) 2010-6080</td></tr>
+    <tr><td>WhatsApp</td><td class="num">(31) 99812-9478</td></tr>
+    <tr><td>Redes</td><td>@bioxmicroorganismos (Instagram e Facebook)</td></tr>
+    <tr><td>Registro IBAMA/MMA</td><td class="num">7733254</td></tr>
+    <tr><td>Registro MAPA</td><td>Produto protocolado / previamente aprovado</td></tr>
+    <tr><td>Jurídico</td><td>Siqueira &amp; Advogados Associados</td></tr>
+    <tr><td>Região</td><td>DDD 31 (Belo Horizonte/MG). Campo no Triângulo Mineiro e Tocantins</td></tr>
+  </table></div>
+
+  <h3>Origem e posicionamento</h3>
+  <blockquote><p>A BIO-X Microorganismos nasceu da união entre o conhecimento e a experiência de <strong>mais de 30 anos de empreendedorismo no agronegócio</strong>.</p><cite>Vídeo institucional</cite></blockquote>
+  <blockquote><p>Unimos o conhecimento técnico e específico de mais de trinta anos de experiência em <strong>tratamento de efluentes</strong>, e a mais antiga e melhor das ferramentas: os microorganismos.</p><cite>Vídeo Saneamento</cite></blockquote>
+  <p><strong>Tese central da marca:</strong> substituir química por biologia. Microorganismos benéficos aplicados de forma dirigida para resolver, no solo, na água, no animal e no saneamento, o que hoje se resolve com produto químico.</p>
+</section>
+
+<section id="s2">
+  <span class="eyebrow">Seção 02</span>
+  <h2>Slogans e frases-chave</h2><div class="rule"></div>
+  <h4>Assinaturas principais</h4>
+  <ul>
+    <li><strong>“Por um futuro sustentável”</strong> — assinatura institucional recorrente</li>
+    <li><strong>“Tecnologia · Desempenho · Economia · Produtividade”</strong></li>
+    <li><strong>“Biorremediador de alta performance”</strong> — Saneamento</li>
+    <li><strong>“Maior resultado com menor custo”</strong></li>
+    <li><strong>“Venha fazer parte dessa ideia.”</strong> — CTA de fechamento</li>
+    <li>“Compromisso · Sustentabilidade · Responsabilidade”</li>
+    <li>“Aplicável em QUALQUER CULTIVO” · “A melhor alternativa para a Agricultura”</li>
+    <li>“Revitalizar · Restaurar” · “100% NATURAL”</li>
+  </ul>
+  <h4>Os quatro atributos que a marca desenha na tela</h4>
+  <p>Fácil aplicação · Ecologicamente correto · Economicamente viável · Biodegradável</p>
+  <blockquote><p>Bem-vindos ao nosso documentário, onde exploramos a biotecnologia mais atestada por inúmeros produtores e <strong>aprovada cientificamente pela Viçosa</strong> — o Bio-X Agricultura Única, transformando completamente, dia após dia, o modo como cultivamos e consumimos.</p><cite>Abertura do documentário</cite></blockquote>
+</section>
+
+<section id="s3">
+  <span class="eyebrow">Seção 03</span>
+  <h2>Missão, visão e valores</h2><div class="rule"></div>
+  <div class="tw"><table>
+    <tr><th>Pilar</th><th>Conteúdo</th></tr>
+    <tr><td><strong>Missão</strong> <em>(Objetivo)</em></td><td>Conhecimento técnico + experiência de mais de 30 anos, com foco em Sustentabilidade</td></tr>
+    <tr><td><strong>Visão</strong> <em>(Foco)</em></td><td>Parceria de sucesso + Responsabilidade Social</td></tr>
+    <tr><td><strong>Valores</strong></td><td>Resultados + Inovação · Economia · Valorização de Mercado</td></tr>
+  </table></div>
+  <h3>Mecanismo de ação</h3>
+  <p>A BIO-X atua por <strong>dois meios</strong> — em meio <strong>oxidativo</strong> e por aplicação direta. Os microorganismos benéficos induzem os <strong>microorganismos neutros</strong> a atuarem a favor do processo, reduzindo patogênicos, doenças e gases ofensivos. Ao fim do processo saem <strong>CO₂</strong> e <strong>NO₂</strong> no lugar de compostos tóxicos. Base tecnológica: <span class="sci">lactobacilos</span> e <span class="sci">leveduras</span>.</p>
+</section>
+
+<section id="s4">
+  <span class="eyebrow">Seção 04</span>
+  <h2>Linhas de negócio</h2><div class="rule"></div>
+  <p>O institucional lista as áreas de atuação: <strong>Agricultura · Saneamento · Bovinocultura · Compostagem</strong>, mais as linhas de Suinocultura, Avicultura e a linha residencial.</p>
+
+  <div class="verts">
+    <div class="vert"><span class="tag">Agro</span><h5>Agricultura Única</h5><p>Bioinsumo para qualquer cultivo. Carro-chefe.</p></div>
+    <div class="vert"><span class="tag">Agro</span><h5>10 SEC</h5><p>Biodessecante natural. Reduz herbicida em 40%.</p></div>
+    <div class="vert"><span class="tag">Indústria</span><h5>Saneamento</h5><p>Biorremediador para ETE, rios e lagoas.</p></div>
+    <div class="vert"><span class="tag">Pecuária</span><h5>Saúde do Gado</h5><p>Bovinocultura. Material técnico pendente.</p></div>
+    <div class="vert"><span class="tag">Pecuária</span><h5>Saúde Única Suínos</h5><p>Ambiente e água de bebida.</p></div>
+    <div class="vert"><span class="tag">Pecuária</span><h5>Saúde Única Aves</h5><p>CA · GPD · TGI.</p></div>
+    <div class="vert"><span class="tag">Varejo</span><h5>Dgrada® / Bravo®</h5><p>Biodegradador residencial em pote.</p></div>
+  </div>
+
+  <h3>Agricultura Única</h3>
+  <h4>Benefícios declarados</h4>
+  <ul>
+    <li>Aumento da produtividade · Menor custo agregado</li>
+    <li>Revitaliza a microbiota do solo · Enriquece o solo com substâncias benéficas</li>
+    <li>Homogeneidade da colheita</li>
+    <li>Diminuição da incidência de doenças e pragas</li>
+    <li>Melhor condição vegetal frente ao estresse hídrico</li>
+    <li>Ecologicamente correto, sem impactos ambientais</li>
+  </ul>
+  <h4>Composição</h4>
+  <div class="tw"><table>
+    <tr><th>Grupo</th><th>Espécie</th></tr>
+    <tr><td>Lactobacilos</td><td class="sci">Lacticaseibacillus paracasei</td></tr>
+    <tr><td>Saccharomyces</td><td class="sci">Saccharomyces cerevisiae</td></tr>
+    <tr><td>Cianobactérias</td><td class="sci">Cianofíceas</td></tr>
+    <tr><td>Lentilactobacillus</td><td class="sci">Lentilactobacillus parafarraginis</td></tr>
+  </table></div>
+  <h4>Ação — liberam com a quebra dos compostos</h4>
+  <p>Nutrientes <strong>K, N, Ca, Mg, Fe, P, S</strong> · Antioxidantes · Aminoácidos · Vitaminas A, B1, B12 e B5 · Enzimas.</p>
+  <h4>Duas vias primárias</h4>
+  <ul>
+    <li><strong>Competição:</strong> os microorganismos são predadores naturais dos patógenos causadores de doenças.</li>
+    <li><strong>Digestão acelerada:</strong> quebra compostos e promove maior permeabilidade do solo, facilitando raízes primárias e secundárias.</li>
+  </ul>
+  <p><strong>Culturas comprovadas no material:</strong> soja, milho, cana-de-açúcar, citros, hortifrúti e hortaliças, cereais e grãos.</p>
+
+  <div class="gap"><b>Confirmar antes de publicar</b><p>O documentário afirma produtividades “de __ a cem por cento a mais do que no padrão da fazenda”. O primeiro número ficou ilegível no vídeo e é um claim forte demais para ir ao ar sem confirmação.</p></div>
+
+  <h3>10 SEC — Biodessecante Natural</h3>
+  <p>Auxilia na <strong>dessecação acelerada das plantas daninhas</strong> e pode ser usado com todos os tipos de herbicida.</p>
+  <ul>
+    <li>Potencializa a <strong>inibição enzimática de glutamina sintetase</strong> na rota de assimilação do nitrogênio — acumula amônia e as células morrem.</li>
+    <li><strong>Acelera a decomposição</strong> da matéria morta por fermentação e ajuda a eliminar os resíduos químicos que os herbicidas deixam no solo.</li>
+  </ul>
+  <blockquote>
+    <p>Se 1 litro de herbicida custa <strong>R$ 10,00</strong>:<br>
+    R$ 6,00 (60% herbicida) + R$ 1,50 (40% 10SEC) = <strong>R$ 7,50 por hectare</strong><br>
+    → <strong>economia de 25%</strong> frente a 100% de herbicida convencional.</p>
+    <cite>A conta que vende o produto — usar como bloco de destaque</cite>
+  </blockquote>
+
+  <h3>Saneamento</h3>
+  <blockquote><p>É um <strong>biorremediador de alta performance</strong>, composto por microorganismos na forma líquida, com foco em melhoria da performance e na <strong>substituição parcial ou total de produtos químicos</strong>.</p></blockquote>
+  <ul>
+    <li><strong>Facultativo, aeróbio e anaeróbio</strong> — aplicável em qualquer modelo de estação de tratamento</li>
+    <li>Também em <strong>lagoas e rios contaminados</strong>, sem dano ambiental</li>
+    <li>Elimina patógenos e produtores diretos de gases ofensivos: <strong>amônia, sulfídrico, metilmercaptano</strong></li>
+    <li>Substitui o processo <strong>oxidativo</strong> pela <strong>fermentação natural</strong> da matéria</li>
+    <li>Ajusta os <strong>parâmetros analíticos</strong> para a água retornar à natureza corretamente</li>
+  </ul>
+  <p><strong>Aplicações:</strong> ETE industrial ou sanitária · rios, lagos e lagoas · fossas sépticas e caixas de gordura.<br>
+  <strong>Composição:</strong> bactérias fotossintéticas · leveduras · bactérias ácido-lácticas.</p>
+
+  <h3>Saúde Única — Suínos e Aves</h3>
+  <p>Tecnologia 100% natural aplicada <strong>no ambiente e na água de bebida</strong>. Reduz patógenos causadores de doenças como a diarreia e diminui gases ofensivos, favorecendo o bem-estar dos animais e dos colaboradores.</p>
+  <h4>Suínos — benefícios</h4>
+  <p>Diminui a refugagem · Reduz a mortalidade · Reduz uso de antibióticos e produtos químicos · Repelente natural · Potencializa o sistema imune · Sanitizante natural para instalações.</p>
+  <h4>Aves — os três indicadores</h4>
+  <div class="tw"><table>
+    <tr><th>Sigla</th><th>Benefício</th></tr>
+    <tr><td class="num">CA</td><td>Melhora da Conversão Alimentar</td></tr>
+    <tr><td class="num">GPD</td><td>Incremento positivo no Ganho de Peso Diário</td></tr>
+    <tr><td class="num">TGI</td><td>Equilíbrio da microbiota intestinal, com modulação do TGI e aumento progressivo do sistema imune</td></tr>
+  </table></div>
+  <p><strong>Composição (ambas as linhas):</strong> <span class="sci">Saccharomyces boulardii, Lactobacillus rhamnosus, Lactobacillus parafarraginis, Lactobacillus casei</span>, sacarose, água.</p>
+
+  <h3>Linha residencial — Dgrada® e Bravo®</h3>
+  <p>Biodegradador em pote, dissolvido “em um copo com água limpa” e aplicado <strong>uma vez por semana</strong>. Diminui e evita mau cheiro, entupimentos nas redes e problemas em caixas de gordura.</p>
+  <p><strong>Onde usar:</strong> pias · ralos · fossas sépticas · caixas de gordura · biodigestores · vasos sanitários.<br>
+  <strong>Razão social do Bravo:</strong> Bravo Indústria e Comércio S/A.</p>
+  <div class="gap"><b>Definir arquitetura de marcas</b><p>Dgrada e Bravo parecem ser a mesma fórmula sob duas marcas — o comercial do Bravo mostra potes Dgrada em cena. Confirmar antes de estruturar o menu do site.</p></div>
+</section>
+
+<section id="s5">
+  <span class="eyebrow">Seção 05</span>
+  <h2>Principais clientes</h2><div class="rule"></div>
+  <p>Do slide “Principais Clientes” do institucional e dos logos do vídeo de Saneamento. É o ativo mais forte do material.</p>
+  <div class="tw"><table>
+    <tr><th>Setor</th><th>Clientes</th></tr>
+    <tr><td>Saneamento e água</td><td>COPASA · SABESP · BRK Ambiental · SAAE · Codau · Allonda Ambiental · Biotec · Fundação Renova</td></tr>
+    <tr><td>Indústria e mineração</td><td>Petrobras · Votorantim Cimentos · RHI Magnesita · AngloGold Ashanti · Klabin · Teksid · Precon · Síntese</td></tr>
+    <tr><td>Alimentos, bebidas e farma</td><td>Nestlé · Novartis · Vigor · Coca-Cola FEMSA</td></tr>
+    <tr><td>Engenharia e construção</td><td>Andrade Gutierrez · OAS · Engevix · CCM · Mello Azevedo · Conata · Grupo CAP</td></tr>
+    <tr><td>Outros</td><td>SESC · Caterpillar · Tiberina</td></tr>
+  </table></div>
+  <div class="gap"><b>Risco jurídico</b><p>Confirmar autorização de uso de marca com cada cliente antes de publicar os logos. Um slide interno de apresentação tem exposição muito diferente de um site aberto. Alternativa segura: listar apenas os nomes em texto, ou “clientes de referência sob consulta”.</p></div>
+</section>
+
+<section id="s6">
+  <span class="eyebrow">Seção 06</span>
+  <h2>Depoimentos e casos reais</h2><div class="rule"></div>
+  <p>Nomes e cargos conforme as legendas exatas do documentário.</p>
+  <div class="tw"><table>
+    <tr><th>Nome</th><th>Descrição</th></tr>
+    <tr><td><strong>Sr. Cláudio</strong></td><td>Produtor rural de hortifrúti e hortaliças em Uberlândia – MG</td></tr>
+    <tr><td><strong>Daniel Lopes</strong></td><td>Produtor rural nos municípios de Uberlândia e Prata – MG</td></tr>
+    <tr><td><strong>Arthur Borges</strong></td><td>Responsável técnico pelo uso do Bio-X Agricultura Única nos canaviais da <strong>Usina Aroeira</strong></td></tr>
+    <tr><td><strong>Elson Borges</strong></td><td>Produtor rural de cereais e grãos em Uberlândia, Cruzeiro dos Peixotos e Martinésia – MG</td></tr>
+    <tr><td><strong>Denes Carrijo e Fernando</strong></td><td>Produtores rurais de cereais e grãos em Uberlândia, Cruzeiro dos Peixotos, Monte Alegre – MG e Tocantins – TO. Fazendas 3 Irmãs</td></tr>
+  </table></div>
+  <div class="gap"><b>Consentimento de imagem</b><p>Depoimento gravado para vídeo não está automaticamente liberado para uso em site. Confirmar com cada produtor.</p></div>
+</section>
+
+<section id="s7">
+  <span class="eyebrow">Seção 07</span>
+  <h2>Mídia e eventos</h2><div class="rule"></div>
+  <ul>
+    <li><strong>TV Paranaíba</strong> — matéria exibida em <strong>24/03/2024</strong>, com o selo “Agricultura regenerativa: técnica traz benefícios econômicos”. Rende uma seção “Na Mídia”.</li>
+    <li><strong>Validação científica</strong> — biotecnologia “aprovada cientificamente pela Viçosa”.</li>
+    <li><strong>Dia de Campo próprio</strong> — parcelas demonstrativas de soja, placas “Aqui tem BIO-X”, drone sobre os talhões, palestra sob tenda e foto oficial com cerca de 40 participantes.</li>
+    <li><strong>Parque de Exposições CAMARU</strong> (Uberlândia) — feira de 31 de março a 4 de abril, mote “Conhecimento”.</li>
+    <li><strong>Confraternização de equipe</strong> — material para “Nossa Gente” / cultura.</li>
+  </ul>
+</section>
+
+<section id="s8">
+  <span class="eyebrow">Seção 08</span>
+  <h2>Sistema visual</h2><div class="rule"></div>
+  <h3>Logo</h3>
+  <p><strong>BIO-X</strong> em sans geométrica leve, caixa alta. O <strong>X</strong> é o elemento gráfico: duas barras em chevron que se cruzam, uma em cinza-branco e outra em turquesa — lê-se como um X e como uma dupla hélice estilizada. Sob o logo, sempre <strong>MICROORGANISMOS</strong> em corpo pequeno com tracking muito aberto. Há versão branca (fundo escuro) e azul-escuro + turquesa (fundo claro).</p>
+
+  <h3>Paleta observada</h3>
+  <div class="sw">
+    <div><i style="background:#0E5A6B"></i><b>#0E5A6B</b><span>Azul-petróleo institucional</span></div>
+    <div><i style="background:#1FB6C1"></i><b>#1FB6C1</b><span>Turquesa — o X, destaques</span></div>
+    <div><i style="background:#12314F"></i><b>#12314F</b><span>Navy de texto</span></div>
+    <div><i style="background:#2E7D32"></i><b>#2E7D32</b><span>Verde Agricultura Única</span></div>
+    <div><i style="background:#C9A227"></i><b>#C9A227</b><span>Dourado 10SEC</span></div>
+    <div><i style="background:#F4F6F5"></i><b>#F4F6F5</b><span>Off-white clean</span></div>
+  </div>
+
+  <h3>Sub-marcas com identidade própria</h3>
+  <ul>
+    <li><strong>BIO-X Microorganismos</strong> — azul-petróleo + turquesa (marca-mãe)</li>
+    <li><strong>Agricultura Única</strong> — verde, folhas em degradê, selo circular “100% natural”</li>
+    <li><strong>10 SEC</strong> — dourado sobre preto, condensada, registro premium industrial</li>
+    <li><strong>Saúde Única</strong> — turquesa, ícone animal e coração com eletrocardiograma</li>
+    <li><strong>Dgrada / Bravo</strong> — linha consumo, mais colorida e informal</li>
+  </ul>
+
+  <h3>Recomendação de direção de arte</h3>
+  <p>O material atual é denso, com muito degradê, sombra e brilho — estética de apresentação dos anos 2010. Para um site clean, o caminho é <strong>manter apenas o logo e a paleta</strong> e reconstruir o resto: tipografia sóbria, muito espaço em branco, fotografia real em grande formato — o acervo de B-roll é excelente: microscopia, drone sobre soja, colheitadeira, laranjal, pimentão na caixa — e os números como protagonistas.</p>
+</section>
+
+<section id="s9">
+  <span class="eyebrow">Seção 09</span>
+  <h2>Inventário dos 24 arquivos</h2><div class="rule"></div>
+  <h4>Imagens — 6 folders prontos</h4>
+  <p>Saúde do Gado · Saneamento · Saúde Única Suínos · Agricultura Única (o mais completo) · Saúde Única Aves · uma foto real de caixa de pimentões verdes.</p>
+  <h4>Vídeos — 18 peças, cerca de 38 minutos</h4>
+  <div class="tw"><table>
+    <tr><th>Ref</th><th>Duração</th><th>Conteúdo</th><th>Valor</th></tr>
+    <tr><td class="num">v01</td><td class="num">7:09</td><td><strong>Documentário Agricultura Única</strong> — legendado, 6 depoimentos, matéria da TV Paranaíba</td><td>Máximo</td></tr>
+    <tr><td class="num">v03</td><td class="num">3:15</td><td><strong>Institucional BIO-X</strong> — missão, visão, valores, mecanismo, slide de clientes</td><td>Máximo</td></tr>
+    <tr><td class="num">v06</td><td class="num">2:57</td><td><strong>Saneamento</strong> completo, legendado, com logos de clientes</td><td>Máximo</td></tr>
+    <tr><td class="num">v08</td><td class="num">4:01</td><td><strong>Institucional + 10SEC</strong> — história, cinco verticais, mecanismo</td><td>Máximo</td></tr>
+    <tr><td class="num">v09</td><td class="num">1:36</td><td>10SEC — comparativo de lavoura e conta de economia</td><td>Alto</td></tr>
+    <tr><td class="num">v05</td><td class="num">1:01</td><td>Dia de Campo — parcelas, drone, palestra, foto do grupo</td><td>Alto</td></tr>
+    <tr><td class="num">v14</td><td class="num">0:07</td><td>Vinheta de logo — microscópio ao selo Agricultura Única</td><td>Alto</td></tr>
+    <tr><td class="num">v02</td><td class="num">1:16</td><td>Slides Saúde Única Suínos</td><td>Médio</td></tr>
+    <tr><td class="num">v04</td><td class="num">0:54</td><td>Animação Dgrada + contato</td><td>Médio</td></tr>
+    <tr><td class="num">v07</td><td class="num">1:13</td><td>Comercial Bravo Biodegradador</td><td>Médio</td></tr>
+    <tr><td class="num">v12</td><td class="num">1:30</td><td>B-roll granja de suínos + produtor</td><td>Médio</td></tr>
+    <tr><td class="num">v13</td><td class="num">1:30</td><td>B-roll citros e solo</td><td>Médio</td></tr>
+    <tr><td class="num">v17</td><td class="num">1:18</td><td>B-roll milho</td><td>Médio</td></tr>
+    <tr><td class="num">v15/16</td><td class="num">5:08</td><td>Microscopia — campo claro, leveduras</td><td>Textura</td></tr>
+    <tr><td class="num">v18</td><td class="num">0:34</td><td>Promo do evento Parque CAMARU (terceiro)</td><td>Baixo</td></tr>
+    <tr><td class="num">v10/11</td><td class="num">4:22</td><td>UGC com criança repórter em colheitadeira e lavoura</td><td>Não usar</td></tr>
+  </table></div>
+  <div class="gap"><b>Maior risco do acervo</b><p>Os vídeos v10 e v11 mostram uma criança identificável. Não usar no site sem autorização expressa dos responsáveis.</p></div>
+</section>
+
+<section id="s10">
+  <span class="eyebrow">Seção 10</span>
+  <h2>Lacunas — o que pedir ao cliente</h2><div class="rule"></div>
+  <div class="tw"><table>
+    <tr><th>#</th><th>Item</th><th>Por quê</th></tr>
+    <tr><td class="num">01</td><td>CNPJ e razão social da BIO-X</td><td>Só temos “Bravo Indústria e Comércio S/A”, que é outra entidade</td></tr>
+    <tr><td class="num">02</td><td>Endereço físico completo</td><td>Temos apenas o DDD 31</td></tr>
+    <tr><td class="num">03</td><td>Logo em vetor (.AI / .SVG / .EPS)</td><td>Tudo que existe é frame de vídeo comprimido</td></tr>
+    <tr><td class="num">04</td><td>Material técnico da linha Bovina</td><td>Vertical mais fraca do acervo — folder sem benefícios nem composição</td></tr>
+    <tr><td class="num">05</td><td>Número exato do ganho de produtividade</td><td>Claim central da home</td></tr>
+    <tr><td class="num">06</td><td>Estudo da UFV</td><td>Embasa “aprovado cientificamente pela Viçosa”</td></tr>
+    <tr><td class="num">07</td><td>Número do registro MAPA</td><td>Temos só o IBAMA 7733254</td></tr>
+    <tr><td class="num">08</td><td>Autorizações de uso</td><td>Logos de clientes, imagem dos produtores, imagem da criança</td></tr>
+    <tr><td class="num">09</td><td>Fichas técnicas</td><td>Dosagem, embalagens, modo de aplicação por cultura</td></tr>
+    <tr><td class="num">10</td><td>Arquitetura de marcas</td><td>Dgrada e Bravo são a mesma coisa?</td></tr>
+  </table></div>
+</section>
+
+<section id="s11">
+  <span class="eyebrow">Seção 11</span>
+  <h2>Arquitetura sugerida para o site</h2><div class="rule"></div>
+<pre>Home ── herói com a vinheta do microscópio + "Por um futuro sustentável"
+│
+├── A BIO-X            30 anos · missão/visão/valores · IBAMA 7733254 · UFV · mecanismo
+├── Soluções
+│   ├── Agricultura Única    benefícios · composição · culturas · depoimentos
+│   ├── 10 SEC               comparativo de lavoura + a conta dos 25%
+│   ├── Saneamento           ETE · rios e lagoas · fossas — o mais corporativo
+│   ├── Saúde do Gado        (aguardando material)
+│   ├── Saúde Única Suínos   refugagem · mortalidade · antibióticos
+│   └── Saúde Única Aves     CA · GPD · TGI
+├── Resultados          depoimentos em vídeo · Dia de Campo · fotos de lavoura
+├── Clientes            prova social (pendente de autorização)
+├── Na Mídia            TV Paranaíba, 24/03/2024
+├── Linha Residencial   Dgrada / Bravo
+└── Contato             (31) 2010-6080 · WhatsApp (31) 99812-9478</pre>
+  <h4>Os quatro números que devem aparecer na home</h4>
+  <p><strong>+30 anos</strong> de experiência · <strong>25%</strong> de economia com o 10SEC · <strong>IBAMA 7733254</strong> · <strong>100% natural</strong></p>
+</section>
+
+<footer>Dossiê BIO-X · compilado de 24 arquivos · 27/08/2026</footer>
+
+</main>
+</div>
+</div>

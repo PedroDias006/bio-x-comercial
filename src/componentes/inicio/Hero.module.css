@@ -1,0 +1,111 @@
+.hero { --mx: 0px; --my: 0px; position: relative; isolation: isolate; overflow: hidden; background: #f4f6f7; color: #123542; padding: 62px 24px 26px; }
+.hero::before { content: ''; position: absolute; z-index: -2; inset: 0; pointer-events: none; background: linear-gradient(180deg, #f4f6f7a8 0%, #f4f6f78f 42%, #f4f6f7e8 100%), url('/imagens/hero/biotecnologia-integrada.jpg') center 42% / cover no-repeat; filter: saturate(.68) contrast(.9); }
+.aurora { position: absolute; z-index: -1; inset: -180px -15% 0; pointer-events: none; background: radial-gradient(circle at 4% 29%, #00d8f58f 0, #00bfd040 8%, transparent 22%), radial-gradient(circle at 96% 31%, #00d8f57a 0, #00bfd038 8%, transparent 21%), radial-gradient(ellipse at 50% 9%, #00c8df52, transparent 43%), radial-gradient(ellipse at 50% 48%, #e9fcffd6, transparent 52%); transform: translate(var(--mx), var(--my)); transition: transform 800ms ease-out; }
+.conteudo { position: relative; z-index: 2; text-align: center; max-width: 930px; margin: auto; animation: entrada 850ms both; }
+.conteudo::before { content: ''; position: absolute; z-index: -1; inset: -34px -90px -42px; pointer-events: none; background: radial-gradient(ellipse at center, #f7fbfce8 0%, #f7fbfcc4 47%, transparent 74%); filter: blur(7px); }
+.selo { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 26px; color: #1d5260; font-size: 12px; font-weight: 650; letter-spacing: .045em; }
+.selo span { width: 7px; height: 7px; border-radius: 50%; background: #00a7bc; box-shadow: 0 0 0 5px #00bdd812; }
+.conteudo h1 { margin: 0; color: #082f3d; font-size: clamp(42px, 5.2vw, 76px); font-weight: 580; letter-spacing: -.06em; line-height: 1.08; text-shadow: 0 1px 18px #ffffffa8; }
+.conteudo h1 span { color: #007f96; }
+.descricao { margin: 25px auto 0; max-width: 610px; font-size: 17px; font-weight: 500; line-height: 1.7; color: #294f5c; text-shadow: 0 1px 12px #fff; }
+.acoes { display: flex; justify-content: center; align-items: center; gap: 24px; margin-top: 30px; }
+.primario, .secundario { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-height: 50px; font-size: 13px; font-weight: 650; transition: transform 200ms, background 200ms; }
+.primario { border-radius: 30px; padding: 14px 24px; background: #00c8df; color: #07313c; box-shadow: 0 7px 22px #00b8d220, inset 0 1px #ffffff70; }
+.primario:hover { background: #57dcec; transform: translateY(-2px); }
+.secundario { color: #173f4d; text-shadow: 0 1px 10px #fff; }
+.secundario:hover { color: #007f94; transform: translateY(-2px); }
+.trilhas { position: absolute; pointer-events: none; inset: 85px 0 auto; height: 260px; z-index: 1; opacity: .88; }
+.trilhas svg { position: absolute; width: min(25vw, 320px); height: 260px; stroke: #70becb; stroke-width: 1.15; filter: drop-shadow(0 0 5px #00c9e550); }
+.trilhaEsquerda { left: -60px; mask-image: linear-gradient(90deg, black 40%, transparent); }
+.trilhaDireita { right: -60px; transform: scaleX(-1); mask-image: linear-gradient(90deg, black 40%, transparent); }
+.trilhas .pulso { stroke: #00cce5; stroke-width: 2.8; stroke-dasharray: 42 393; filter: drop-shadow(0 0 4px #00d9f5); animation: fluxo 5s linear infinite; }
+.descobrir { display: flex; justify-content: center; align-items: center; gap: 10px; width: fit-content; min-height: 44px; margin: 24px auto 0; font-size: 10px; letter-spacing: .04em; color: #54717c; }
+@keyframes entrada { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fluxo { to { stroke-dashoffset: -435; } }
+/* Painéis assimétricos: processo, universo micro e aplicações conectadas. */
+.paineis { position: relative; z-index: 2; display: grid; grid-template-columns: 1.05fr .86fr 1.65fr 1fr; gap: 18px; align-items: end; width: min(1540px, calc(100vw - 48px)); margin: 96px 0 0; left: 50%; transform: translateX(-50%); padding: 0 0 28px; }
+.paineis article { position: relative; box-sizing: border-box; height: 390px; border: 1px solid #fff; border-radius: 25px; box-shadow: 0 18px 48px #194b5e0d, inset 0 0 0 1px #d9e5e955; background: linear-gradient(135deg,#ffffff,#eaf0f3); text-align: left; transition: transform 600ms ease, box-shadow 300ms; }
+.paineis article:hover { box-shadow: 0 24px 55px #194b5e1c; }
+.cabecalhoCard { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #56717d; font-size: 11px; line-height: 1.5; }
+.protocolo { padding: 22px; transform: translateY(calc(var(--my) * -.6 - 14px)); }
+.etapa { display: flex; align-items: center; gap: 13px; padding: 17px 13px; margin-top: 18px; background: #e9eff2; border: 1px solid #dfe8ec; border-radius: 17px; }
+.etapa > svg { margin-left: auto; color: #2696ab; flex-shrink: 0; }
+.numero { font-size: 11px; color: #78949f; align-self: flex-start; padding-top: 2px; }
+.etapa small { display: block; font-size: 8px; letter-spacing: .12em; color: #607f8d; margin-bottom: 6px; }
+.etapa strong { font-size: 16px; font-weight: 550; line-height: 1.25; letter-spacing: -.025em; }
+.conector { display: flex; gap: 7px; align-items: center; justify-content: center; height: 23px; color: #009db9; margin-bottom: -18px; }
+.conector span { width: 1px; height: 12px; background: #b9d8df; }
+.cardNota { display: flex; gap: 7px; align-items: center; font-size: 9px; color: #637e88; margin-top: 20px; }
+.ponto { display: inline-block; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: #00b9d3; box-shadow: 0 0 0 4px #00bad313; }
+.paineis .micro { padding: 20px; overflow: hidden; background: radial-gradient(ellipse at 40% 25%,#117b91,#073648 65%,#092936); border-color: #196476; color: #f1fcff; transform: translateY(calc(var(--my) * .5 + 8px)); box-shadow: 0 22px 50px #063e4929; }
+.micro .cabecalhoCard { color: #b1d1db; font-size: 10px; }
+.sinal { color: #6ce7f8; font-size: 7px; letter-spacing: .1em; border: 1px solid #65d3e54d; border-radius: 20px; padding: 4px 7px; }
+.petri { position: relative; width: 150px; height: 150px; margin: 20px auto 12px; border: 1px solid #62dce33a; border-radius: 50%; background: radial-gradient(circle at 40% 40%, #34d6e71c, #05344270); box-shadow: inset 0 0 25px #00d9ff15, 0 0 35px #0ec7ee0d; }
+.petriAnel { position: absolute; inset: 8px; border: 1px solid #b4f8ff19; border-radius: 50%; }
+.petriAnel:nth-child(2) { inset: 24px; border-style: dashed; animation: giro 45s linear infinite; }
+.petri i { position: absolute; width: 19px; height: 9px; border-radius: 60%; border: 1px solid #adf5ff99; background: #3bd8ea99; box-shadow: 0 0 10px #2cd0ed70, inset 0 0 4px #e2ffff; transform: rotate(-35deg); animation: vida 5s ease-in-out infinite alternate; }
+.petri i:nth-of-type(3n) { width: 9px; height: 9px; background: #e2fbff; }
+.mira { position: absolute; left: 49%; top: 44%; color: #c0faff66; font-size: 14px; }
+.microTexto small { color: #79c8d9; font-size: 8px; letter-spacing: .15em; }
+.microTexto strong { display: block; margin-top: 8px; font-size: 22px; font-weight: 500; line-height: 1.18; letter-spacing: -.04em; }
+.paineis .conexoes { padding: 26px 24px 12px; background: radial-gradient(ellipse at 100% 0%, #c6f5fa, transparent 60%),linear-gradient(145deg,#fff,#e8eef2); transform: translateY(calc(var(--my) * -.4 - 22px)); }
+.conexoes h2 { margin: 18px 0 0; font-size: clamp(35px,3.3vw,50px); font-weight: 500; line-height: 1.04; letter-spacing: -.055em; }
+.conexoes h2 span { color: #009bb6; }
+.ondas { position: relative; margin: 10px -6px 0; height: 125px; overflow: hidden; }
+.ondas::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg,transparent 0 39px,#668a9910 40px); }
+.ondas svg { width: 100%; height: 100%; overflow: visible; }
+.ondas path { stroke: #009fbd; stroke-width: 1.6; opacity: .35; transition: opacity 400ms, stroke-width 400ms; stroke-dasharray: 750; animation: desenhar 2s ease both; }
+.ondas path:nth-child(2) { stroke: #48b6ce; }
+.ondas path:nth-child(3) { stroke: #476b89; }
+.ondas path.ondaAtiva { opacity: 1; stroke-width: 2.8; filter: drop-shadow(0 0 4px #00bedd66); }
+.ambientes { display: flex; gap: 4px; border-top: 1px solid #cfdfe5; padding-top: 8px; }
+.ambientes button { display: flex; flex: 1; justify-content: center; align-items: center; gap: 5px; min-height: 44px; padding: 4px; border-radius: 10px; color: #597381; font-size: 9px; cursor: pointer; transition: background 180ms; }
+.ambientes button:hover { background: #dcf3f8; }
+.ambientes button[aria-pressed='true'] { background: #d0f0f6; color: #006e86; }
+.ambientes svg { flex-shrink: 0; }
+.destino { padding: 22px; overflow: hidden; transform: translateY(calc(var(--my) * .7 + 5px)); }
+.destinoCorpo { animation: entrada 400ms both; min-height: 220px; }
+.destinoCategoria { display: block; color: #02859e; font-size: 9px; letter-spacing: .05em; margin-top: 22px; }
+.destino h3 { font-size: 23px; font-weight: 550; letter-spacing: -.04em; line-height: 1.15; margin: 10px 0; }
+.destino p { font-size: 11px; line-height: 1.7; color: #617986; }
+.destino a { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; font-size: 10px; color: #007c95; font-weight: 650; }
+.destino a:hover { text-decoration: underline; }
+.barras { display: flex; justify-content: space-between; gap: 5px; align-items: end; height: 60px; mask-image: linear-gradient(to top,#000, #0009); }
+.barras i { width: 10px; border-radius: 4px 4px 0 0; background: linear-gradient(#09b9d4,#bdebf2); transform-origin: bottom; animation: respirar 4s ease-in-out infinite alternate; }
+@keyframes vida { to { transform: translate(5px,-7px) rotate(25deg); opacity: .65; } }
+@keyframes giro { to { transform: rotate(360deg); } }
+@keyframes desenhar { from { stroke-dashoffset: 750; } to { stroke-dashoffset: 0; } }
+@keyframes respirar { to { transform: scaleY(.7); } }
+@media (min-width: 1101px) {
+  .hero { min-height: calc(100svh - 120px); padding-top: clamp(28px, 4vh, 46px); padding-bottom: 10px; }
+  .selo { margin-bottom: 16px; }
+  .conteudo h1 { font-size: clamp(42px, 4.35vw, 64px); line-height: 1.03; }
+  .descricao { margin-top: 16px; font-size: 15px; line-height: 1.55; }
+  .acoes { margin-top: 20px; }
+  .primario, .secundario { min-height: 46px; }
+  .paineis { margin-top: clamp(100px, 11vh, 118px); padding-bottom: 10px; }
+  .paineis article { height: clamp(282px, 32vh, 318px); }
+  .protocolo, .destino { padding: 17px; }
+  .etapa { padding: 11px 10px; margin-top: 11px; }
+  .etapa strong { font-size: 14px; }
+  .conector { height: 18px; margin-bottom: -11px; }
+  .cardNota { margin-top: 11px; }
+  .paineis .micro { padding: 17px; }
+  .petri { width: 118px; height: 118px; margin: 11px auto 8px; }
+  .microTexto strong { margin-top: 5px; font-size: 18px; }
+  .paineis .conexoes { padding: 18px 20px 9px; }
+  .conexoes h2 { margin-top: 10px; font-size: clamp(33px, 2.8vw, 42px); }
+  .ondas { height: 82px; margin-top: 5px; }
+  .ambientes button { min-height: 38px; }
+  .destinoCorpo { min-height: 155px; }
+  .destinoCategoria { margin-top: 13px; }
+  .destino h3 { font-size: 20px; margin: 7px 0; }
+  .destino p { line-height: 1.55; margin: 6px 0; }
+  .destino a { min-height: 36px; }
+  .barras { height: 42px; }
+  .descobrir { min-height: 34px; margin-top: 2px; }
+}
+@media (max-width: 1100px) { .paineis { grid-template-columns: 1fr 1.5fr 1fr; gap: 14px; } .paineis article { height: auto; } .paineis .micro { display: none; } .protocolo,.destino { padding: 18px; } .ambientes button { flex-direction: column; } }
+@media (max-width: 760px) { .hero { padding-top: 42px; } .conteudo h1 { font-size: clamp(36px,7vw,56px); } .paineis { grid-template-columns: 1fr 1fr; width: 100%; margin-top: 80px; gap: 15px; left: auto; transform: none; } .paineis .conexoes { grid-column: 1 / -1; grid-row: 1; transform: none; } .paineis .protocolo,.paineis .destino { transform: none; } .conexoes h2 { font-size: 44px; } .ambientes button { flex-direction: row; font-size: 10px; } .destinoCorpo { min-height: 234px; } .etapa { padding: 14px 9px; gap: 8px; } .etapa > svg { display: none; } .trilhas { opacity: .5; } }
+@media (max-width: 520px) { .hero { padding: 35px 18px 20px; } .selo { font-size: 10px; margin-bottom: 22px; } .conteudo h1 { font-size: clamp(32px,8.8vw,44px); } .descricao { font-size: 14px; margin-top: 20px; } .quebra { display: none; } .acoes { flex-direction: column; gap: 2px; margin-top: 22px; } .primario { width: 100%; max-width: 310px; } .secundario { font-size: 12px; } .trilhas { display: none; } .paineis { gap: 12px; } .paineis .conexoes { padding: 25px 17px 10px; } .conexoes .cabecalhoCard { font-size: 9px; } .protocolo,.destino { padding: 14px; border-radius: 19px !important; } .cabecalhoCard { font-size: 9px; } .etapa strong { font-size: 13px; } .numero { display: none; } .destino h3 { font-size: 20px; } .destino p { font-size: 10px; } .destinoCorpo { min-height: 240px; } .cardNota { font-size: 8px; } .ambientes button { font-size: 9px; } .ambientes svg { width: 13px; } }
+@media (prefers-reduced-motion: reduce) { .hero *, .hero *::before { animation: none !important; transition: none !important; } .aurora { transform: none; } .paineis article { transform: none; } }
