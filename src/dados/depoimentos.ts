@@ -9,6 +9,8 @@
  * abaixo mantém a seção fora do ar.
  */
 
+import type { Idioma } from "@/i18n/config";
+
 /** Vire para `true` só depois que os consentimentos de imagem chegarem. */
 export const podePublicarDepoimentos = true;
 
@@ -94,3 +96,56 @@ export const eventos = [
     imagem: "/imagens/dia-de-campo-placa.jpg",
   },
 ];
+/* ------------------------------------------------------------------ */
+/* Traduções. Nomes de pessoas, fazendas e cidades não se traduzem.     */
+/* Mesma ordem das listas acima.                                        */
+/* ------------------------------------------------------------------ */
+
+const depoimentosTraduzidos: Record<"en" | "es", Pick<Depoimento, "descricao" | "cidade" | "cultura">[]> = {
+  en: [
+    { descricao: "Fruit and vegetable grower", cidade: "Uberlândia — MG", cultura: "Fruits & vegetables" },
+    { descricao: "Farmer", cidade: "Uberlândia and Prata — MG", cultura: "Grains" },
+    { descricao: "Technical lead for the use of Bio-X Agricultura Única in the sugarcane fields of the Aroeira mill", cidade: "Usina Aroeira", cultura: "Sugarcane" },
+    { descricao: "Cereal and grain farmer", cidade: "Uberlândia, Cruzeiro dos Peixotos and Martinésia — MG", cultura: "Cereals & grains" },
+    { descricao: "Cereal and grain farmers — Fazendas 3 Irmãs", cidade: "Uberlândia, Cruzeiro dos Peixotos, Monte Alegre — MG and Tocantins — TO", cultura: "Cereals & grains" },
+  ],
+  es: [
+    { descricao: "Productor de frutas y hortalizas", cidade: "Uberlândia — MG", cultura: "Frutas y hortalizas" },
+    { descricao: "Productor rural", cidade: "Uberlândia y Prata — MG", cultura: "Granos" },
+    { descricao: "Responsable técnico del uso de Bio-X Agricultura Única en los cañaverales del ingenio Aroeira", cidade: "Usina Aroeira", cultura: "Caña de azúcar" },
+    { descricao: "Productor rural de cereales y granos", cidade: "Uberlândia, Cruzeiro dos Peixotos y Martinésia — MG", cultura: "Cereales y granos" },
+    { descricao: "Productores rurales de cereales y granos — Fazendas 3 Irmãs", cidade: "Uberlândia, Cruzeiro dos Peixotos, Monte Alegre — MG y Tocantins — TO", cultura: "Cereales y granos" },
+  ],
+};
+
+const eventosTraduzidos: Record<"en" | "es", { titulo: string; descricao: string }[]> = {
+  en: [
+    { titulo: "BIO-X Field Day", descricao: "Soybean demonstration plots with “Aqui tem BIO-X” signs, drone flights over the fields, a technical talk under a tent and around 40 farmers in attendance." },
+    { titulo: "Side-by-side field plots", descricao: "Plots next to each other make it possible to compare conventional treatment and BIO-X treatment on the same soil, in the same season and under the same weather." },
+  ],
+  es: [
+    { titulo: "Día de Campo BIO-X", descricao: "Parcelas demostrativas de soja con carteles “Aqui tem BIO-X”, vuelo de dron sobre los lotes, charla técnica bajo carpa y cerca de 40 productores presentes." },
+    { titulo: "Parcelas comparativas en campo", descricao: "Lotes lado a lado permiten comparar el tratamiento convencional y el tratamiento con BIO-X en el mismo suelo, en la misma cosecha y bajo el mismo clima." },
+  ],
+};
+
+export function depoimentosEm(idioma: Idioma): Depoimento[] {
+  if (idioma === "pt") return depoimentos;
+  return depoimentos.map((d, i) => ({ ...d, ...depoimentosTraduzidos[idioma][i] }));
+}
+
+export function eventosEm(idioma: Idioma) {
+  if (idioma === "pt") return eventos;
+  return eventos.map((e, i) => ({ ...e, ...eventosTraduzidos[idioma][i] }));
+}
+
+/** Matérias com a data escrita no idioma. O título da matéria fica no original. */
+export function naMidiaEm(idioma: Idioma): Materia[] {
+  const formato = new Intl.DateTimeFormat(idioma === "pt" ? "pt-BR" : idioma, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+  return naMidia.map((m) => ({ ...m, data: formato.format(new Date(m.dataIso)) }));
+}

@@ -5,6 +5,8 @@
  * Para trocar um número, um slogan ou o domínio, o lugar é este arquivo.
  */
 
+import type { Idioma } from "@/i18n/config";
+
 /** Domínio público. Usado em canonical, Open Graph e sitemap. */
 export const urlDoSite =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://bioxmicroorganismos.com.br";
@@ -71,10 +73,52 @@ export const missaoVisaoValores = [
 ];
 
 /** Menu principal. A ordem é a que aparece no cabeçalho e no rodapé. */
-export const navegacao = [
-  { rotulo: "A BIO-X", href: "/sobre" },
-  { rotulo: "Soluções", href: "/solucoes" },
-  { rotulo: "Resultados", href: "/resultados" },
-  { rotulo: "Clientes", href: "/clientes" },
-  { rotulo: "Na mídia", href: "/na-midia" },
-];
+const rotulosDoMenu: Record<Idioma, string[]> = {
+  pt: ["A BIO-X", "Soluções", "Resultados", "Clientes", "Na mídia"],
+  en: ["About BIO-X", "Solutions", "Results", "Clients", "In the media"],
+  es: ["BIO-X", "Soluciones", "Resultados", "Clientes", "En los medios"],
+};
+const enderecosDoMenu = ["/sobre", "/solucoes", "/resultados", "/clientes", "/na-midia"];
+
+/** Menu no idioma pedido. `href` é o caminho base, sem prefixo de idioma. */
+export function navegacaoEm(idioma: Idioma) {
+  return enderecosDoMenu.map((href, i) => ({ rotulo: rotulosDoMenu[idioma][i], href }));
+}
+
+/** Menu em português — mantido para quem ainda importa a lista direto. */
+export const navegacao = navegacaoEm("pt");
+
+export const assinaturaEm: Record<Idioma, string> = {
+  pt: "Por um futuro sustentável",
+  en: "For a sustainable future",
+  es: "Por un futuro sostenible",
+};
+
+/** Os números e o missão/visão/valores nos três idiomas (mesma ordem acima). */
+export const numerosEm: Record<Idioma, typeof numeros> = {
+  pt: numeros,
+  en: [
+    { valor: "+30", unidade: "years", descricao: "of experience in agribusiness" },
+    { valor: "7733254", unidade: "", descricao: "IBAMA / MMA registration (Brazil)" },
+    { valor: "100", unidade: "%", descricao: "natural, no chemical residue" },
+  ],
+  es: [
+    { valor: "+30", unidade: "años", descricao: "de experiencia en el agronegocio" },
+    { valor: "7733254", unidade: "", descricao: "registro IBAMA / MMA (Brasil)" },
+    { valor: "100", unidade: "%", descricao: "natural, sin residuos químicos" },
+  ],
+};
+
+export const missaoVisaoValoresEm: Record<Idioma, typeof missaoVisaoValores> = {
+  pt: missaoVisaoValores,
+  en: [
+    { pilar: "Mission", complemento: "Purpose", texto: "To combine technical expertise and more than 30 years of experience to deliver real sustainability to our clients." },
+    { pilar: "Vision", complemento: "Focus", texto: "Successful partnerships and social responsibility." },
+    { pilar: "Values", complemento: "", texto: "Results and innovation, savings and market value." },
+  ],
+  es: [
+    { pilar: "Misión", complemento: "Objetivo", texto: "Unir conocimiento técnico y más de 30 años de experiencia para entregar sostenibilidad real al cliente." },
+    { pilar: "Visión", complemento: "Enfoque", texto: "Alianzas exitosas y responsabilidad social." },
+    { pilar: "Valores", complemento: "", texto: "Resultados e innovación, economía y valorización de mercado." },
+  ],
+};

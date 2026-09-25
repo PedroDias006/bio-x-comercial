@@ -14,8 +14,14 @@
  * A flag abaixo controla isso em um lugar só.
  */
 
-/** Vire para `true` só depois que as autorizações de uso de marca chegarem. */
-export const podePublicarClientes = false;
+import type { Idioma } from "@/i18n/config";
+
+/**
+ * Liberado em 25/09/2026 por decisão do responsável pelo site: os logos
+ * aparecem na página de clientes. Voltar para `false` esconde os logos e
+ * deixa só os nomes, em todo o site, de uma vez.
+ */
+export const podePublicarClientes = true;
 
 export type GrupoDeClientes = {
   setor: string;
@@ -76,3 +82,32 @@ export const totalDeClientes = clientesPorSetor.reduce(
   (soma, grupo) => soma + grupo.clientes.length,
   0,
 );
+
+/**
+ * Arquivo do logo de cada cliente (versões limpas em /imagens/clientes/marcas).
+ * Codau e Conata não têm logo utilizável no acervo: aparecem só com o nome.
+ */
+const arquivosDosLogos: Record<string, string> = {
+  COPASA: "copasa", SABESP: "sabesp", "BRK Ambiental": "brk-ambiental", SAAE: "saae",
+  "Allonda Ambiental": "allonda-ambiental", Biotec: "biotec", "Fundação Renova": "fundacao-renova",
+  Petrobras: "petrobras", "Votorantim Cimentos": "votorantim-cimentos", "RHI Magnesita": "rhi-magnesita",
+  "AngloGold Ashanti": "anglogold-ashanti", Klabin: "klabin", Teksid: "teksid", Precon: "precon", Síntese: "sintese",
+  Nestlé: "nestle", Novartis: "novartis", Vigor: "vigor", "Coca-Cola FEMSA": "coca-cola-femsa",
+  "Andrade Gutierrez": "andrade-gutierrez", OAS: "oas", Engevix: "engevix",
+  "CCM Construtora Centro Minas": "ccm-construtora-centro-minas", "Mello Azevedo": "mello-azevedo", "Grupo CAP": "grupo-cap",
+  SESC: "sesc", Caterpillar: "caterpillar", Tiberina: "tiberina",
+};
+
+/** Caminho do logo, ou `null` quando não há logo (ou a publicação está travada). */
+export function logoDoCliente(nome: string): string | null {
+  if (!podePublicarClientes) return null;
+  const arquivo = arquivosDosLogos[nome];
+  return arquivo ? `/imagens/clientes/marcas/${arquivo}.png` : null;
+}
+
+/** Nome de cada setor nos três idiomas, na ordem de `clientesPorSetor`. */
+export const setoresEm: Record<Idioma, string[]> = {
+  pt: ["Saneamento e água", "Indústria e mineração", "Alimentos, bebidas e farmacêutica", "Engenharia e construção", "Outros setores"],
+  en: ["Sanitation and water", "Industry and mining", "Food, beverages and pharma", "Engineering and construction", "Other sectors"],
+  es: ["Saneamiento y agua", "Industria y minería", "Alimentos, bebidas y farmacéutica", "Ingeniería y construcción", "Otros sectores"],
+};

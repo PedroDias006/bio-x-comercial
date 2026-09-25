@@ -8,7 +8,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Conteiner } from "@/componentes/ui/Conteiner";
-import { solucoes } from "@/dados/solucoes";
+import { solucoesEm, nomeDaCategoria } from "@/dados/solucoes";
+import { rota, type Idioma } from "@/i18n/config";
+import { useIdioma } from "@/i18n/ProvedorIdioma";
 import estilos from "./VitrineDeLinhas.module.css";
 
 /**
@@ -100,20 +102,51 @@ const TAMANHOS =
  * a leitura rápida da régua sem depender de pictogramas genéricos.
  */
 const atalhos = [
-  { rotulo: "Soja e grãos", imagem: "/imagens/atalhos/soja-v2.png", slug: "agricultura-unica" },
-  { rotulo: "Milho", imagem: "/imagens/atalhos/milho-v2.png", slug: "agricultura-unica" },
-  { rotulo: "Cana", imagem: "/imagens/atalhos/cana-v2.png", slug: "agricultura-unica" },
-  { rotulo: "Citros", imagem: "/imagens/atalhos/citros-v2.png", slug: "agricultura-unica" },
-  { rotulo: "Hortifrúti", imagem: "/imagens/atalhos/hortifruti-v2.png", slug: "agricultura-unica" },
-  { rotulo: "ETE", imagem: "/imagens/atalhos/ete-v2.png", slug: "saneamento" },
-  { rotulo: "Rios e lagoas", imagem: "/imagens/atalhos/rios-e-lagoas-v2.png", slug: "saneamento" },
-  { rotulo: "Fossas", imagem: "/imagens/atalhos/fossas-v2.png", slug: "saneamento" },
-  { rotulo: "Bovinos", imagem: "/imagens/atalhos/bovinos-v2.png", slug: "saude-do-gado" },
-  { rotulo: "Suínos", imagem: "/imagens/atalhos/suinos-v2.png", slug: "saude-unica-suinos" },
-  { rotulo: "Aves", imagem: "/imagens/atalhos/aves-v2.png", slug: "saude-unica-aves" },
+  { imagem: "/imagens/atalhos/soja-v2.png", slug: "agricultura-unica" },
+  { imagem: "/imagens/atalhos/milho-v2.png", slug: "agricultura-unica" },
+  { imagem: "/imagens/atalhos/cana-v2.png", slug: "agricultura-unica" },
+  { imagem: "/imagens/atalhos/citros-v2.png", slug: "agricultura-unica" },
+  { imagem: "/imagens/atalhos/hortifruti-v2.png", slug: "agricultura-unica" },
+  { imagem: "/imagens/atalhos/ete-v2.png", slug: "saneamento" },
+  { imagem: "/imagens/atalhos/rios-e-lagoas-v2.png", slug: "saneamento" },
+  { imagem: "/imagens/atalhos/fossas-v2.png", slug: "saneamento" },
+  { imagem: "/imagens/atalhos/bovinos-v2.png", slug: "saude-do-gado" },
+  { imagem: "/imagens/atalhos/suinos-v2.png", slug: "saude-unica-suinos" },
+  { imagem: "/imagens/atalhos/aves-v2.png", slug: "saude-unica-aves" },
 ];
 
+/** Textos da seção. `atalhos` segue a mesma ordem da lista acima. */
+const textos: Record<Idioma, { atalhos: string[]; olho: string; titulo: string; ariaAtalhos: string; anteriores: string; proximas: string }> = {
+  pt: {
+    atalhos: ["Soja e grãos", "Milho", "Cana", "Citros", "Hortifrúti", "ETE", "Rios e lagoas", "Fossas", "Bovinos", "Suínos", "Aves"],
+    olho: "As linhas da BIO-X",
+    titulo: "Cinco linhas, cada uma com um problema para resolver.",
+    ariaAtalhos: "Atalhos por cultura e aplicação",
+    anteriores: "Ver as linhas anteriores",
+    proximas: "Ver as próximas linhas",
+  },
+  en: {
+    atalhos: ["Soy and grains", "Corn", "Sugarcane", "Citrus", "Fruits & veg", "WWTP", "Rivers & ponds", "Septic tanks", "Cattle", "Pigs", "Poultry"],
+    olho: "The BIO-X lines",
+    titulo: "Five lines, each one built to solve a problem.",
+    ariaAtalhos: "Shortcuts by crop and application",
+    anteriores: "See previous lines",
+    proximas: "See next lines",
+  },
+  es: {
+    atalhos: ["Soja y granos", "Maíz", "Caña", "Cítricos", "Frutas y hortalizas", "PTAR", "Ríos y lagunas", "Fosas", "Bovinos", "Cerdos", "Aves"],
+    olho: "Las líneas de BIO-X",
+    titulo: "Cinco líneas, cada una con un problema por resolver.",
+    ariaAtalhos: "Accesos por cultivo y aplicación",
+    anteriores: "Ver las líneas anteriores",
+    proximas: "Ver las próximas líneas",
+  },
+};
+
 export function VitrineDeLinhas() {
+  const idioma = useIdioma();
+  const t = textos[idioma];
+  const solucoes = solucoesEm(idioma);
   const trilhoRef = useRef<HTMLUListElement>(null);
   const [noInicio, setNoInicio] = useState(true);
   const solucoesEmLoop = [...solucoes, ...solucoes];
@@ -122,7 +155,7 @@ export function VitrineDeLinhas() {
     const trilho = trilhoRef.current;
     if (!trilho) return;
 
-    const primeiroRepetido = trilho.children[solucoes.length] as HTMLElement;
+    const primeiroRepetido = trilho.children[trilho.children.length / 2] as HTMLElement;
     const primeiroOriginal = trilho.children[0] as HTMLElement;
     const pontoDeReinicio = primeiroRepetido?.offsetLeft - primeiroOriginal?.offsetLeft;
 
@@ -160,11 +193,11 @@ export function VitrineDeLinhas() {
               aria-hidden="true"
               className="h-px w-10 bg-[var(--biox-turquesa)]"
             />
-            <p className="secao-olho">As linhas da BIO-X</p>
+            <p className="secao-olho">{t.olho}</p>
           </div>
 
           <h2 className="secao-titulo mt-6">
-            Cinco linhas, cada uma com um problema para resolver.
+            {t.titulo}
           </h2>
         </div>
       </Conteiner>
@@ -173,16 +206,16 @@ export function VitrineDeLinhas() {
           Fica encostada no carrossel, sem texto no meio: as duas faixas rolam
           para o lado e precisam ser lidas como uma coisa só — o atalho em
           cima, a linha embaixo. */}
-      <nav aria-label="Atalhos por cultura e aplicação" className="mt-10 sm:mt-12">
+      <nav aria-label={t.ariaAtalhos} className="mt-10 sm:mt-12">
         {/* O `pt-3` existe por causa do `overflow-x-auto`: rolagem horizontal
             também corta na vertical, e sem essa folga o ícone que sobe no
             hover era decepado na borda de cima do trilho. */}
         <ul className="trilho sem-barra flex gap-6 overflow-x-auto scroll-smooth pb-1 pt-3 sm:gap-8">
-          {atalhos.map((atalho) => {
+          {atalhos.map((atalho, i) => {
             return (
-              <li key={atalho.rotulo} className="shrink-0">
+              <li key={atalho.imagem} className="shrink-0">
                 <Link
-                  href={`/solucoes/${atalho.slug}`}
+                  href={rota(idioma, `/solucoes/${atalho.slug}`)}
                   draggable={false}
                   className="group flex w-[92px] flex-col items-center gap-2.5 sm:w-[104px]"
                 >
@@ -200,7 +233,7 @@ export function VitrineDeLinhas() {
                   {/* Caixa de duas linhas em todos: sem altura fixa, um rótulo
                       que quebrasse desalinharia a fileira inteira. */}
                   <span className="flex h-9 w-full items-start justify-center hyphens-auto break-words text-center text-[12.5px] font-semibold leading-tight text-[var(--texto)] transition-colors duration-200 group-hover:text-[var(--biox-turquesa-escuro)] sm:text-[13.5px]">
-                    {atalho.rotulo}
+                    {t.atalhos[i]}
                   </span>
                 </Link>
               </li>
@@ -225,7 +258,7 @@ export function VitrineDeLinhas() {
             return (
               <li key={`${solucao.slug}-${indice}`} className="snap-start">
                 <Link
-                  href={`/solucoes/${solucao.slug}`}
+                  href={rota(idioma, `/solucoes/${solucao.slug}`)}
                   aria-label={`${solucao.nome} — ${solucao.chamada}`}
                   draggable={false}
                   className={`group relative flex h-[368px] w-[290px] flex-col overflow-hidden rounded-[18px] p-5 transition-shadow duration-300 hover:shadow-[0_30px_70px_-40px_rgba(6,35,43,0.5)] sm:h-[432px] sm:w-[340px] sm:p-6 lg:h-[483px] lg:w-[380px] xl:h-[502px] xl:w-[395px] ${tema.fundo} ${tema.texto}`}
@@ -250,7 +283,7 @@ export function VitrineDeLinhas() {
                     <p
                       className={`text-[11px] font-bold uppercase tracking-[0.18em] ${tema.olho}`}
                     >
-                      {solucao.categoria}
+                      {nomeDaCategoria(solucao.categoria, idioma)}
                     </p>
 
                     <h3 className="mt-2 text-[19px] font-extrabold leading-[1.12] tracking-[-0.03em] sm:text-[21px] lg:text-[23px]">
@@ -272,7 +305,7 @@ export function VitrineDeLinhas() {
           onClick={() => andar(-1)}
           aria-hidden={noInicio}
           tabIndex={noInicio ? -1 : undefined}
-          aria-label="Ver as linhas anteriores"
+          aria-label={t.anteriores}
           className={`absolute left-3 top-[calc(50%-4px)] grid size-11 -translate-y-1/2 place-items-center rounded-full bg-[#e8eded]/92 text-[var(--biox-950)] backdrop-blur transition duration-300 hover:bg-[#d9e3e4] sm:left-5 sm:size-14 ${
             noInicio ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
@@ -283,7 +316,7 @@ export function VitrineDeLinhas() {
         <button
           type="button"
           onClick={() => andar(1)}
-          aria-label="Ver as próximas linhas"
+          aria-label={t.proximas}
           className="absolute right-3 top-[calc(50%-4px)] grid size-11 -translate-y-1/2 place-items-center rounded-full bg-[#e8eded]/92 text-[var(--biox-950)] opacity-100 backdrop-blur transition duration-300 hover:bg-[#d9e3e4] sm:right-5 sm:size-14"
         >
           <ChevronRight className="size-5 sm:size-6" strokeWidth={2.2} />

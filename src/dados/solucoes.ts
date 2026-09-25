@@ -10,6 +10,9 @@
  * página mostra um aviso em vez de inventar texto.
  */
 
+import type { Idioma } from "@/i18n/config";
+import { traducoesDasSolucoes } from "./solucoes.traducoes";
+
 export type Solucao = {
   slug: string;
   nome: string;
@@ -198,9 +201,47 @@ export const solucoes: Solucao[] = [
   },
 ];
 
+/** Nome de cada categoria nos três idiomas (a chave continua em português). */
+const nomesDasCategorias: Record<Solucao["categoria"], Record<Idioma, string>> = {
+  Agricultura: { pt: "Agricultura", en: "Agriculture", es: "Agricultura" },
+  Saneamento: { pt: "Saneamento", en: "Sanitation", es: "Saneamiento" },
+  Pecuária: { pt: "Pecuária", en: "Livestock", es: "Ganadería" },
+};
+
+export function nomeDaCategoria(categoria: Solucao["categoria"], idioma: Idioma) {
+  return nomesDasCategorias[categoria][idioma];
+}
+
+/** Uma solução com os textos no idioma pedido (ver solucoes.traducoes.ts). */
+function traduzir(solucao: Solucao, idioma: Idioma): Solucao {
+  if (idioma === "pt") return solucao;
+  const t = traducoesDasSolucoes[idioma][solucao.slug];
+  if (!t) return solucao;
+  return {
+    ...solucao,
+    resumo: t.resumo,
+    chamada: t.chamada,
+    descricao: t.descricao,
+    beneficios: t.beneficios,
+    composicao: solucao.composicao.map((item, i) => ({
+      grupo: t.composicao[i] ?? item.grupo,
+      cientifico: t.cientifico?.[i] ?? item.cientifico,
+    })),
+    detalhes: t.detalhes ?? solucao.detalhes,
+    // Notas internas, em português: só aparecem na versão pt.
+    pendencias: undefined,
+  };
+}
+
+/** Todas as soluções, com os textos no idioma pedido. */
+export function solucoesEm(idioma: Idioma): Solucao[] {
+  return solucoes.map((solucao) => traduzir(solucao, idioma));
+}
+
 /** Busca uma solução pelo slug. Usada pela página /solucoes/[slug]. */
-export function acharSolucao(slug: string) {
-  return solucoes.find((solucao) => solucao.slug === slug);
+export function acharSolucao(slug: string, idioma: Idioma = "pt") {
+  const solucao = solucoes.find((item) => item.slug === slug);
+  return solucao ? traduzir(solucao, idioma) : undefined;
 }
 
 /** As categorias na ordem em que devem aparecer nos filtros e listagens. */

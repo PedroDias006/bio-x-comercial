@@ -1,17 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Conteiner } from "@/componentes/ui/Conteiner";
-import { navegacao, assinatura, nomeDaEmpresa } from "@/dados/site";
+import { navegacaoEm, assinaturaEm, nomeDaEmpresa } from "@/dados/site";
 import {
   canaisDeContato,
   redesSociais,
   endereco,
   registros,
+  textoRegistroMapa,
+  urlWhatsappEm,
 } from "@/dados/contato";
 import { solucoes } from "@/dados/solucoes";
+import { rota, type Idioma } from "@/i18n/config";
 
-export function Rodape() {
+const textos: Record<Idioma, { apoio: string; navegar: string; solucoes: string; contato: string; direitos: string; cep: string; ariaInst: string; ariaSol: string }> = {
+  pt: { apoio: "Biotecnologia 100% natural para agricultura, saneamento e pecuária.", navegar: "Navegar", solucoes: "Soluções", contato: "Contato", direitos: "Todos os direitos reservados.", cep: "CEP", ariaInst: "Rodapé — institucional", ariaSol: "Rodapé — soluções" },
+  en: { apoio: "100% natural biotechnology for agriculture, sanitation and livestock.", navegar: "Explore", solucoes: "Solutions", contato: "Contact", direitos: "All rights reserved.", cep: "ZIP", ariaInst: "Footer — company", ariaSol: "Footer — solutions" },
+  es: { apoio: "Biotecnología 100% natural para agricultura, saneamiento y ganadería.", navegar: "Navegar", solucoes: "Soluciones", contato: "Contacto", direitos: "Todos los derechos reservados.", cep: "CP", ariaInst: "Pie de página — institucional", ariaSol: "Pie de página — soluciones" },
+};
+
+export function Rodape({ idioma }: { idioma: Idioma }) {
   const ano = new Date().getFullYear();
+  const t = textos[idioma];
+  const navegacao = navegacaoEm(idioma);
 
   return (
     <footer className="atmosfera-escura mt-24 text-white">
@@ -31,20 +42,19 @@ export function Rodape() {
               className="h-14 w-auto"
             />
             <p className="mt-6 max-w-xs text-sm leading-6 text-white/70">
-              {assinatura}. Biotecnologia 100% natural para agricultura,
-              saneamento e pecuária.
+              {assinaturaEm[idioma]}. {t.apoio}
             </p>
           </div>
 
-          <nav aria-label="Rodapé — institucional">
+          <nav aria-label={t.ariaInst}>
             <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
-              Navegar
+              {t.navegar}
             </h2>
             <ul className="mt-5 space-y-3">
               {navegacao.map((item) => (
                 <li key={item.href}>
                   <Link
-                    href={item.href}
+                    href={rota(idioma, item.href)}
                     className="text-sm text-white/75 transition hover:text-white"
                   >
                     {item.rotulo}
@@ -54,15 +64,15 @@ export function Rodape() {
             </ul>
           </nav>
 
-          <nav aria-label="Rodapé — soluções">
+          <nav aria-label={t.ariaSol}>
             <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
-              Soluções
+              {t.solucoes}
             </h2>
             <ul className="mt-5 space-y-3">
               {solucoes.map((solucao) => (
                 <li key={solucao.slug}>
                   <Link
-                    href={`/solucoes/${solucao.slug}`}
+                    href={rota(idioma, `/solucoes/${solucao.slug}`)}
                     className="text-sm text-white/75 transition hover:text-white"
                   >
                     {solucao.nome}
@@ -74,13 +84,13 @@ export function Rodape() {
 
           <div>
             <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
-              Contato
+              {t.contato}
             </h2>
             <ul className="mt-5 space-y-3">
               {canaisDeContato.map((canal) => (
                 <li key={canal.id}>
                   <a
-                    href={canal.href}
+                    href={canal.id === "whatsapp" ? urlWhatsappEm(idioma) : canal.href}
                     target={canal.externo ? "_blank" : undefined}
                     rel={canal.externo ? "noreferrer noopener" : undefined}
                     className="text-sm text-white/75 transition hover:text-white"
@@ -113,7 +123,7 @@ export function Rodape() {
                 <br />
                 {endereco.bairro} — {endereco.cidade}/{endereco.uf}
                 <br />
-                CEP {endereco.cep}
+                {t.cep} {endereco.cep}
               </address>
             ) : null}
           </div>
@@ -121,12 +131,12 @@ export function Rodape() {
 
         <div className="mt-14 flex flex-col gap-4 border-t border-white/12 pt-8 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {ano} {nomeDaEmpresa}. Todos os direitos reservados.
+            © {ano} {nomeDaEmpresa}. {t.direitos}
           </p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             {registros.map((registro) => (
               <li key={registro.orgao}>
-                {registro.orgao}: {registro.numero}
+                {registro.orgao}: {registro.orgao === "MAPA" ? textoRegistroMapa[idioma] : registro.numero}
               </li>
             ))}
           </ul>

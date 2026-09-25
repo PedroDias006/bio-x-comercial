@@ -196,22 +196,23 @@ textarea {
    scroll cruza o limiar, sem interpolar nada por frame.
    ============================================================ */
 :root {
-  --nav-altura: 100px;
+  --nav-altura: 84px;
   --nav-largura: 100%;
   --nav-padding: 20px;
   --nav-raio: 0px;
   --nav-sombra: 0 1px 0 rgba(6, 35, 43, 0.06);
   /* O logo tem a palavra MICROORGANISMOS embaixo, em corpo pequeno: se ele
      encolhe demais, essa linha vira um borrão. Por isso ocupa por volta de
-     60% da altura da barra, e não os ~45% de um logo só de símbolo. */
-  --logo-altura: 78px;
+     60% da altura da barra, e não os ~45% de um logo só de símbolo.
+     (Reduzido em 09/2026: o logo estava grande demais na barra.) */
+  --logo-altura: 58px;
 }
 
 @media (min-width: 640px) {
   :root {
-    --nav-altura: 120px;
+    --nav-altura: 96px;
     --nav-padding: 32px;
-    --logo-altura: 98px;
+    --logo-altura: 70px;
   }
 }
 
@@ -222,29 +223,29 @@ textarea {
 }
 
 html[data-nav-rolado="true"] {
-  --nav-altura: 88px;
+  --nav-altura: 72px;
   --nav-largura: calc(100% - 24px);
   --nav-padding: 16px;
   --nav-raio: 18px;
   --nav-sombra: 0 18px 50px rgba(6, 35, 43, 0.16);
-  --logo-altura: 68px;
+  --logo-altura: 52px;
 }
 
 @media (min-width: 640px) {
   html[data-nav-rolado="true"] {
-    --nav-altura: 100px;
+    --nav-altura: 80px;
     --nav-largura: min(calc(100% - 40px), 1280px);
     --nav-padding: 24px;
-    --logo-altura: 80px;
+    --logo-altura: 58px;
   }
 }
 
 @media (min-width: 1024px) {
   html[data-nav-rolado="true"] {
-    --nav-altura: 104px;
+    --nav-altura: 84px;
     --nav-largura: min(calc(100% - 40px), 1400px);
     --nav-padding: 32px;
-    --logo-altura: 84px;
+    --logo-altura: 62px;
   }
 }
 
@@ -574,4 +575,17 @@ html[data-nav-rolado="true"] {
 #tecnologia-titulo { scroll-margin-top: 145px; }
 @media (max-width: 639px) {
   .nav-casca .nav-acao { display: none; }
+}
+
+/* Letreiro de logos (página de clientes): duas faixas que rolam sem parar.
+   O conteúdo vem duplicado, então andar -50% fecha o ciclo sem emenda. */
+@keyframes letreiro {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.letreiro { animation: letreiro 70s linear infinite; will-change: transform; }
+.letreiro-reverso { animation-direction: reverse; }
+.letreiro-faixa:hover .letreiro { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .letreiro { animation: none; }
 }

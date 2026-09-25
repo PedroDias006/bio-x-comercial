@@ -12,6 +12,8 @@
  * `endereco` fica nulo e os componentes simplesmente não renderizam o bloco.
  */
 
+import type { Idioma } from "@/i18n/config";
+
 export type CanalDeContato = {
   id: string;
   rotulo: string;
@@ -25,11 +27,18 @@ export type CanalDeContato = {
  * Mensagem que já vai escrita quando o visitante abre o WhatsApp.
  * Trocar aqui muda em todos os botões do site de uma vez.
  */
-const mensagemWhatsapp = encodeURIComponent(
-  "Olá! Vim pelo site da BIO-X e quero saber mais sobre a tecnologia.",
-);
+const mensagensWhatsapp: Record<Idioma, string> = {
+  pt: "Olá! Vim pelo site da BIO-X e quero saber mais sobre a tecnologia.",
+  en: "Hello! I found BIO-X through the website and would like to learn more about the technology.",
+  es: "¡Hola! Llegué por el sitio de BIO-X y quiero saber más sobre la tecnología.",
+};
 
-export const urlWhatsapp = `https://wa.me/5531998129478?text=${mensagemWhatsapp}`;
+/** Link do WhatsApp com a mensagem já escrita no idioma do visitante. */
+export function urlWhatsappEm(idioma: Idioma) {
+  return `https://wa.me/5531998129478?text=${encodeURIComponent(mensagensWhatsapp[idioma])}`;
+}
+
+export const urlWhatsapp = urlWhatsappEm("pt");
 
 export const canaisDeContato: CanalDeContato[] = [
   {
@@ -83,6 +92,13 @@ export const endereco: {
   uf: string;
   cep: string;
 } | null = null;
+
+/** Texto do registro no MAPA em cada idioma (o número do IBAMA não muda). */
+export const textoRegistroMapa: Record<Idioma, string> = {
+  pt: "Produto protocolado / previamente aprovado",
+  en: "Product filed / pre-approved",
+  es: "Producto protocolado / previamente aprobado",
+};
 
 /** Registros oficiais que aparecem impressos nos folders. */
 export const registros = [

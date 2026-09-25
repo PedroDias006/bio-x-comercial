@@ -1,18 +1,8 @@
-import { Hero } from "@/componentes/inicio/Hero";
-import { Pilares } from "@/componentes/inicio/Pilares";
-import { VitrineDeLinhas } from "@/componentes/inicio/VitrineDeLinhas";
-import { ProvaSocial } from "@/componentes/inicio/ProvaSocial";
-import { ChamadaFinal } from "@/componentes/inicio/ChamadaFinal";
+// ARQUIVO ANTIGO — pode apagar esta pasta.
+// As páginas agora ficam em src/app/[idioma]/ (uma versão por idioma).
+// Este arquivo nunca é exibido: o src/proxy.ts manda toda visita para lá.
+import { notFound } from "next/navigation";
 
-/** Página inicial com apresentação, soluções e resultados da BIO-X. */
-export default function PaginaInicial() {
-  return (
-    <>
-      <Hero />
-      <VitrineDeLinhas />
-      <Pilares />
-      <ProvaSocial />
-      <ChamadaFinal />
-    </>
-  );
+export default function PaginaAntiga() {
+  notFound();
 }

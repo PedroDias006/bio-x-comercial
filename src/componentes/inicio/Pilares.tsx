@@ -6,75 +6,82 @@ import Link from "next/link";
 import Image from "next/image";
 import { Conteiner } from "@/componentes/ui/Conteiner";
 import styles from "./Pilares.module.css";
+import { rota, type Idioma } from "@/i18n/config";
+import { useIdioma } from "@/i18n/ProvedorIdioma";
 
-const pilares = [
-  {
-    nome: "Saneamento",
-    categoria: "Equilíbrio para a água",
-    resumo: "Água tratada. Um ambiente mais saudável.",
-    descricao: "Tecnologia biológica para melhorar a qualidade do efluente, reduzir odores e acelerar a decomposição da matéria orgânica em sistemas de tratamento.",
-    destaque: "Biorremediação",
-    // Os nomes destes dois arquivos são históricos; esta imagem é o riacho.
-    imagem: "/imagens/hero/pilar-agricultura.jpg",
-    alt: "Água de um riacho em meio à vegetação e à luz natural",
-    posicao: "center 58%",
-    icone: Droplets,
-    cor: "#087a8b",
-    fundo: "#edf7f8",
-  },
-  {
-    nome: "Agricultura",
-    categoria: "Vitalidade para o solo",
-    resumo: "Solo mais vivo. Plantas mais fortes.",
-    descricao: "Microorganismos benéficos integrados ao manejo agrícola para favorecer a ciclagem de nutrientes, o desenvolvimento das plantas e uma produção mais sustentável.",
-    destaque: "Agricultura Única",
-    imagem: "/imagens/hero/pilar-saneamento.jpg",
-    alt: "Vista aérea de uma lavoura verde com um trator em operação",
-    posicao: "center 62%",
-    icone: Leaf,
-    cor: "#397445",
-    fundo: "#f0f6ec",
-  },
-  {
-    nome: "Produção animal",
-    categoria: "Cuidado em toda a cadeia",
-    resumo: "Bem-estar e eficiência, lado a lado.",
-    descricao: "Soluções naturais para bovinos, aves e suínos, desenvolvidas para integrar saúde, bem-estar e eficiência à rotina da produção animal.",
-    destaque: "Bovinos · aves · suínos",
-    imagem: "/imagens/vitrine/gado-nova.png",
-    alt: "Bovino no campo ao pôr do sol",
-    posicao: "center",
-    icone: Beef,
-    cor: "#8e5940",
-    fundo: "#faf2ec",
-  },
-  {
-    nome: "Ciência",
-    categoria: "Conhecimento que transforma",
-    resumo: "Da pesquisa à biotecnologia aplicada.",
-    descricao: "Conhecimento técnico transforma microorganismos benéficos em soluções que se integram ao manejo do solo, da água e da produção animal.",
-    destaque: "Conhecimento técnico",
-    imagem: "/imagens/hero/microscopio.jpg",
-    alt: "Objetivas de um microscópio sobre uma amostra de laboratório",
-    posicao: "center 54%",
-    icone: Microscope,
-    cor: "#526e8b",
-    fundo: "#eff3f8",
-  },
-  {
-    nome: "Inovação",
-    categoria: "Novas possibilidades",
-    resumo: "Conexões que fazem o futuro avançar.",
-    descricao: "Inovação, economia e valorização de mercado orientam a evolução contínua das soluções e o impacto positivo em toda a cadeia.",
-    destaque: "Evolução contínua",
-    imagem: "/imagens/hero/biotecnologia-integrada.jpg",
-    alt: "Agricultura, água e produção animal conectadas pela biotecnologia",
-    posicao: "center 48%",
-    icone: Sprout,
-    cor: "#007f88",
-    fundo: "#eaf7f5",
-  },
+/** Parte visual de cada pilar (igual em todos os idiomas). */
+const basePilares = [
+  // Os nomes destes dois arquivos são históricos; esta imagem é o riacho.
+  { imagem: "/imagens/hero/pilar-agricultura.jpg", posicao: "center 58%", icone: Droplets, cor: "#087a8b", fundo: "#edf7f8" },
+  { imagem: "/imagens/hero/pilar-saneamento.jpg", posicao: "center 62%", icone: Leaf, cor: "#397445", fundo: "#f0f6ec" },
+  { imagem: "/imagens/vitrine/gado-nova.png", posicao: "center", icone: Beef, cor: "#8e5940", fundo: "#faf2ec" },
+  { imagem: "/imagens/hero/microscopio.jpg", posicao: "center 54%", icone: Microscope, cor: "#526e8b", fundo: "#eff3f8" },
+  { imagem: "/imagens/hero/biotecnologia-integrada.jpg", posicao: "center 48%", icone: Sprout, cor: "#007f88", fundo: "#eaf7f5" },
 ];
+
+type TextoPilar = { nome: string; categoria: string; resumo: string; descricao: string; destaque: string; alt: string };
+
+const textos: Record<Idioma, {
+  pilares: TextoPilar[];
+  animais: string[];
+  olho: string; titulo: string; apoio: string; ariaNav: string; ariaPiramide: string;
+  instrucao: string; rotulo: string; conheca: string;
+}> = {
+  pt: {
+    pilares: [
+      { nome: "Saneamento", categoria: "Equilíbrio para a água", resumo: "Água tratada. Um ambiente mais saudável.", descricao: "Tecnologia biológica para melhorar a qualidade do efluente, reduzir odores e acelerar a decomposição da matéria orgânica em sistemas de tratamento.", destaque: "Biorremediação", alt: "Água de um riacho em meio à vegetação e à luz natural" },
+      { nome: "Agricultura", categoria: "Vitalidade para o solo", resumo: "Solo mais vivo. Plantas mais fortes.", descricao: "Microorganismos benéficos integrados ao manejo agrícola para favorecer a ciclagem de nutrientes, o desenvolvimento das plantas e uma produção mais sustentável.", destaque: "Agricultura Única", alt: "Vista aérea de uma lavoura verde com um trator em operação" },
+      { nome: "Produção animal", categoria: "Cuidado em toda a cadeia", resumo: "Bem-estar e eficiência, lado a lado.", descricao: "Soluções naturais para bovinos, aves e suínos, desenvolvidas para integrar saúde, bem-estar e eficiência à rotina da produção animal.", destaque: "Bovinos · aves · suínos", alt: "Bovino no campo ao pôr do sol" },
+      { nome: "Ciência", categoria: "Conhecimento que transforma", resumo: "Da pesquisa à biotecnologia aplicada.", descricao: "Conhecimento técnico transforma microorganismos benéficos em soluções que se integram ao manejo do solo, da água e da produção animal.", destaque: "Conhecimento técnico", alt: "Objetivas de um microscópio sobre uma amostra de laboratório" },
+      { nome: "Inovação", categoria: "Novas possibilidades", resumo: "Conexões que fazem o futuro avançar.", descricao: "Inovação, economia e valorização de mercado orientam a evolução contínua das soluções e o impacto positivo em toda a cadeia.", destaque: "Evolução contínua", alt: "Agricultura, água e produção animal conectadas pela biotecnologia" },
+    ],
+    animais: ["Bovino no campo ao pôr do sol", "Galinha branca em uma criação ao ar livre", "Suíno em uma área de criação ao ar livre"],
+    olho: "A estrutura que sustenta a BIO-X",
+    titulo: "Cada camada fortalece a próxima.",
+    apoio: "Da água à inovação, cinco pilares conectam experiência e ciência para transformar o que realmente importa.",
+    ariaNav: "Escolha um dos cinco pilares",
+    ariaPiramide: "Pirâmide tridimensional interativa dos cinco pilares da BIO-X",
+    instrucao: "Toque em uma camada e descubra sua essência.",
+    rotulo: "Pilares BIO-X",
+    conheca: "Conheça a BIO-X",
+  },
+  en: {
+    pilares: [
+      { nome: "Sanitation", categoria: "Balance for water", resumo: "Treated water. A healthier environment.", descricao: "Biological technology that improves effluent quality, reduces odors and speeds up the breakdown of organic matter in treatment systems.", destaque: "Bioremediation", alt: "Stream water among vegetation in natural light" },
+      { nome: "Agriculture", categoria: "Vitality for the soil", resumo: "Livelier soil. Stronger plants.", descricao: "Beneficial microorganisms built into crop management to support nutrient cycling, plant development and more sustainable production.", destaque: "Agricultura Única", alt: "Aerial view of a green field with a tractor at work" },
+      { nome: "Animal production", categoria: "Care across the chain", resumo: "Well-being and efficiency, side by side.", descricao: "Natural solutions for cattle, poultry and pigs, designed to bring health, well-being and efficiency into the daily routine of animal production.", destaque: "Cattle · poultry · pigs", alt: "Cattle in a field at sunset" },
+      { nome: "Science", categoria: "Knowledge that transforms", resumo: "From research to applied biotechnology.", descricao: "Technical expertise turns beneficial microorganisms into solutions that fit into the management of soil, water and animal production.", destaque: "Technical expertise", alt: "Microscope lenses over a lab sample" },
+      { nome: "Innovation", categoria: "New possibilities", resumo: "Connections that move the future forward.", descricao: "Innovation, savings and market value guide the continuous evolution of our solutions and their positive impact across the whole chain.", destaque: "Continuous evolution", alt: "Agriculture, water and animal production connected by biotechnology" },
+    ],
+    animais: ["Cattle in a field at sunset", "White hen on a free-range farm", "Pig on a free-range farm"],
+    olho: "The structure behind BIO-X",
+    titulo: "Each layer strengthens the next.",
+    apoio: "From water to innovation, five pillars connect experience and science to transform what really matters.",
+    ariaNav: "Choose one of the five pillars",
+    ariaPiramide: "Interactive 3D pyramid of the five BIO-X pillars",
+    instrucao: "Tap a layer to discover what it stands for.",
+    rotulo: "BIO-X pillars",
+    conheca: "About BIO-X",
+  },
+  es: {
+    pilares: [
+      { nome: "Saneamiento", categoria: "Equilibrio para el agua", resumo: "Agua tratada. Un ambiente más saludable.", descricao: "Tecnología biológica para mejorar la calidad del efluente, reducir olores y acelerar la descomposición de la materia orgánica en sistemas de tratamiento.", destaque: "Biorremediación", alt: "Agua de un arroyo entre la vegetación y la luz natural" },
+      { nome: "Agricultura", categoria: "Vitalidad para el suelo", resumo: "Suelo más vivo. Plantas más fuertes.", descricao: "Microorganismos benéficos integrados al manejo agrícola para favorecer el ciclo de nutrientes, el desarrollo de las plantas y una producción más sostenible.", destaque: "Agricultura Única", alt: "Vista aérea de un cultivo verde con un tractor trabajando" },
+      { nome: "Producción animal", categoria: "Cuidado en toda la cadena", resumo: "Bienestar y eficiencia, de la mano.", descricao: "Soluciones naturales para bovinos, aves y cerdos, desarrolladas para integrar salud, bienestar y eficiencia a la rutina de la producción animal.", destaque: "Bovinos · aves · cerdos", alt: "Bovino en el campo al atardecer" },
+      { nome: "Ciencia", categoria: "Conocimiento que transforma", resumo: "De la investigación a la biotecnología aplicada.", descricao: "El conocimiento técnico transforma microorganismos benéficos en soluciones que se integran al manejo del suelo, del agua y de la producción animal.", destaque: "Conocimiento técnico", alt: "Objetivos de un microscopio sobre una muestra de laboratorio" },
+      { nome: "Innovación", categoria: "Nuevas posibilidades", resumo: "Conexiones que hacen avanzar el futuro.", descricao: "La innovación, la economía y la valorización de mercado orientan la evolución continua de las soluciones y el impacto positivo en toda la cadena.", destaque: "Evolución continua", alt: "Agricultura, agua y producción animal conectadas por la biotecnología" },
+    ],
+    animais: ["Bovino en el campo al atardecer", "Gallina blanca en una cría al aire libre", "Cerdo en un área de cría al aire libre"],
+    olho: "La estructura que sostiene a BIO-X",
+    titulo: "Cada capa fortalece la siguiente.",
+    apoio: "Del agua a la innovación, cinco pilares conectan experiencia y ciencia para transformar lo que realmente importa.",
+    ariaNav: "Elija uno de los cinco pilares",
+    ariaPiramide: "Pirámide tridimensional interactiva de los cinco pilares de BIO-X",
+    instrucao: "Toque una capa y descubra su esencia.",
+    rotulo: "Pilares BIO-X",
+    conheca: "Conozca BIO-X",
+  },
+};
 
 // A mesma geometria desenha as fatias e define a origem da conexão.
 const fatias = [
@@ -88,6 +95,9 @@ const fatias = [
 type Conexao = { largura: number; altura: number; x: number; y: number; fimX: number; fimY: number; curvaX: number; indice: number };
 
 export function Pilares() {
+  const idioma = useIdioma();
+  const t = textos[idioma];
+  const pilares = basePilares.map((base, i) => ({ ...base, ...t.pilares[i] }));
   const [ativo, setAtivo] = useState(pilares.length - 1);
   const [conexao, setConexao] = useState<Conexao | null>(null);
   const experienciaRef = useRef<HTMLDivElement>(null);
@@ -154,13 +164,13 @@ export function Pilares() {
       <Conteiner>
         <div className={styles.introducao}>
           <div>
-            <p className={styles.olho}><span /> A estrutura que sustenta a BIO-X</p>
-            <h2 id="pilares-titulo">Cada camada fortalece a próxima.</h2>
+            <p className={styles.olho}><span /> {t.olho}</p>
+            <h2 id="pilares-titulo">{t.titulo}</h2>
           </div>
-          <p>Da água à inovação, cinco pilares conectam experiência e ciência para transformar o que realmente importa.</p>
+          <p>{t.apoio}</p>
         </div>
 
-        <div className={styles.navegacao} role="group" aria-label="Escolha um dos cinco pilares">
+        <div className={styles.navegacao} role="group" aria-label={t.ariaNav}>
           {pilares.map((item, indice) => (
             <button key={item.nome} type="button" aria-pressed={ativo === indice}
               aria-controls={`${id}-detalhe`} onClick={() => setAtivo(indice)}
@@ -174,7 +184,7 @@ export function Pilares() {
 
         <div className={styles.experiencia} ref={experienciaRef} style={tema}>
           <div className={styles.torre}>
-            <svg ref={torreRef} viewBox="0 0 1000 1080" role="group" aria-label="Pirâmide tridimensional interativa dos cinco pilares da BIO-X">
+            <svg ref={torreRef} viewBox="0 0 1000 1080" role="group" aria-label={t.ariaPiramide}>
               <defs>
                 <pattern id={`${id}-agua`} patternUnits="userSpaceOnUse" width="1000" height="1080">
                   <image href="/imagens/hero/pilar-agricultura.jpg" x="0" y="700" width="1000" height="390" preserveAspectRatio="xMidYMid slice" />
@@ -231,7 +241,7 @@ export function Pilares() {
                 })}
               </g>
             </svg>
-            <p className={styles.instrucao}><span /> Toque em uma camada e descubra sua essência.</p>
+            <p className={styles.instrucao}><span /> {t.instrucao}</p>
           </div>
 
           {conexao && conexao.indice === ativo && <svg className={styles.conexao}
@@ -246,16 +256,16 @@ export function Pilares() {
             <div className={styles.cardInterior} key={pilar.nome}>
               <div className={`${styles.foto} ${ativo === 2 ? styles.fotoAnimais : ""}`}>
                 {ativo === 2 ? [
-                  { src: "/imagens/vitrine/gado-nova.png", alt: "Bovino no campo ao pôr do sol" },
-                  { src: "/imagens/vitrine/aves-nova.png", alt: "Galinha branca em uma criação ao ar livre" },
-                  { src: "/imagens/vitrine/suinos-nova.png", alt: "Suíno em uma área de criação ao ar livre" },
+                  { src: "/imagens/vitrine/gado-nova.png", alt: t.animais[0] },
+                  { src: "/imagens/vitrine/aves-nova.png", alt: t.animais[1] },
+                  { src: "/imagens/vitrine/suinos-nova.png", alt: t.animais[2] },
                 ].map((animal) => <div key={animal.src}><Image src={animal.src} alt={animal.alt} fill sizes="(min-width: 901px) 150px, 30vw" /></div>) :
                   <Image src={pilar.imagem} alt={pilar.alt} fill sizes="(min-width: 1280px) 500px, (min-width: 901px) 42vw, 90vw" style={{ objectPosition: pilar.posicao }} />}
                 <div className={styles.fotoEtiqueta}><Icone size={15} strokeWidth={1.7} aria-hidden="true" /><span>{pilar.categoria}</span></div>
               </div>
               <div className={styles.detalheConteudo}>
                 <div className={styles.detalheTopo}>
-                  <p className={styles.rotulo}>Pilares BIO-X</p>
+                  <p className={styles.rotulo}>{t.rotulo}</p>
                   <span className={styles.indice}><b>{String(ativo + 1).padStart(2, "0")}</b><span> / 05</span></span>
                 </div>
                 <h3 id={`${id}-nome`}>{pilar.nome}</h3>
@@ -263,7 +273,7 @@ export function Pilares() {
                 <p className={styles.descricao}>{pilar.descricao}</p>
                 <div className={styles.rodapeCard}>
                   <span className={styles.destaque}>{pilar.destaque}</span>
-                  <Link href="/sobre" aria-label={`Conheça a BIO-X: ${pilar.nome}`}><span>Conheça a BIO-X</span><span className={styles.seta}><ArrowUpRight size={19} aria-hidden="true" /></span></Link>
+                  <Link href={rota(idioma, "/sobre")} aria-label={`${t.conheca}: ${pilar.nome}`}><span>{t.conheca}</span><span className={styles.seta}><ArrowUpRight size={19} aria-hidden="true" /></span></Link>
                 </div>
               </div>
             </div>
