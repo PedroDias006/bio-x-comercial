@@ -98,32 +98,33 @@ export default async function PaginaSolucoes({ params }: Props) {
           {/* Índice: um cartão por produto, levando à seção dele */}
           <nav
             aria-label={t.produtos}
-            className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:mt-16 lg:grid-cols-5 lg:gap-4"
+            className="-mx-6 mt-12 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:mt-16 lg:grid-cols-5 lg:gap-4"
           >
             {solucoes.map((solucao, i) => {
               const visual = visualDa(solucao.slug);
+              const Simbolo = visual.simbolo;
               return (
                 <a
                   key={solucao.slug}
                   href={`#${solucao.slug}`}
                   style={comCor(visual)}
-                  className="group relative isolate flex aspect-[4/5] flex-col justify-between overflow-hidden rounded-2xl p-4 text-white shadow-[0_10px_30px_-12px_rgba(4,30,43,0.5)] transition-transform duration-300 hover:-translate-y-1 last:col-span-2 sm:last:col-span-1 sm:aspect-[3/4]"
+                  className="group relative isolate flex aspect-[4/5] w-[72vw] max-w-[280px] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-2xl bg-[linear-gradient(150deg,var(--cor-escura),color-mix(in_srgb,var(--cor-escura)_55%,#06232b))] p-4 text-white shadow-[0_10px_30px_-12px_rgba(4,30,43,0.5)] transition-transform duration-300 hover:-translate-y-1 sm:w-auto sm:max-w-none sm:aspect-[3/4]"
                 >
-                  <Image
-                    src={visual.fundo}
-                    alt=""
-                    fill
-                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
-                    className="-z-10 object-cover saturate-[1.15] transition-transform duration-700 group-hover:scale-110"
-                    style={{ objectPosition: visual.foco }}
+                  {/* Sem foto aqui: as fotos de cada produto aparecem logo abaixo, na seção dele (nenhuma foto se repete) */}
+                  <Simbolo
+                    aria-hidden="true"
+                    strokeWidth={1.1}
+                    className="absolute -bottom-6 -right-6 -z-10 h-36 w-36 text-white/15 transition-transform duration-700 group-hover:-rotate-6 group-hover:scale-110"
                   />
-                  <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-black/65 to-transparent" />
+                  <div className="absolute -left-10 -top-10 -z-10 h-32 w-32 rounded-full bg-[var(--cor)] opacity-25 blur-2xl" />
 
                   <div className="flex items-center justify-between">
-                    <span className="rounded-full bg-black/40 px-2 py-0.5 text-[11px] font-bold tracking-[0.15em] text-white backdrop-blur-md">
+                    <span className="rounded-full bg-black/25 px-2 py-0.5 text-[11px] font-bold tracking-[0.15em] text-white">
                       {doisDigitos(i + 1)}
                     </span>
-                    <FotoIcone src={visual.icone} tamanho="p" />
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--cor)] text-black/75 shadow-[0_4px_14px_rgba(0,0,0,0.3)]">
+                      <Simbolo size={20} strokeWidth={1.9} aria-hidden="true" />
+                    </span>
                   </div>
 
                   <div>

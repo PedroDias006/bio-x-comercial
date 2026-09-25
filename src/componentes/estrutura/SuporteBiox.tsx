@@ -174,7 +174,7 @@ export function SuporteBiox() {
         onClick={() => setAberto((valor) => !valor)}
       >
         <span className={styles.status} aria-hidden="true" />
-        <Image src="/imagens/hero/agente-biox.png" alt="" fill sizes="82px" priority />
+        <Image src="/imagens/hero/agente-biox.png" alt="" fill sizes="82px" />
         {aberto && <span className={styles.fechar}><ChevronLeft size={17} /></span>}
       </button>
       {!aberto && <span className={styles.convite}>{t.convite}</span>}

@@ -30,7 +30,7 @@ export function ChamadaFinal({ idioma }: { idioma: Idioma }) {
   const email = canaisDeContato.find((canal) => canal.id === "email");
 
   return (
-    <section className="atmosfera-hero relative overflow-hidden py-20 text-white lg:py-28">
+    <section className="atmosfera-hero relative hidden overflow-hidden py-20 text-white md:block lg:py-28">
       <div className="malha-tecnica absolute inset-0" aria-hidden="true" />
 
       <Conteiner className="relative text-center">

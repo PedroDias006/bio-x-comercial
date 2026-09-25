@@ -126,14 +126,19 @@ export default async function PaginaClientes({ params }: { params: Promise<{ idi
             {/* Mosaico dos setores */}
             <div className="relative lg:col-span-6">
               <div className="grid h-[460px] grid-cols-2 grid-rows-2 gap-3 sm:h-[560px] lg:gap-4">
-                {[0, 1, 3].map((indice, posicao) => {
+                {/* Fotos próprias do mosaico — os cartões de setor mais abaixo usam outras */}
+                {([
+                  [0, "/imagens/clientes/mosaico-saneamento.jpg"],
+                  [1, "/imagens/clientes/mosaico-industria.jpg"],
+                  [3, "/imagens/clientes/mosaico-engenharia.jpg"],
+                ] as const).map(([indice, foto], posicao) => {
                   const v = visualDosSetores[indice];
                   return (
                     <figure
                       key={indice}
                       className={`relative overflow-hidden rounded-[28px] shadow-[0_24px_50px_-30px_rgba(6,35,43,0.6)] ${posicao === 0 ? "row-span-2" : ""}`}
                     >
-                      <Image src={v.foto} alt="" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover saturate-[1.1]" priority={posicao === 0} />
+                      <Image src={foto} alt="" fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover saturate-[1.1]" priority={posicao === 0} />
                       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
                       <figcaption className="absolute bottom-3 left-3 right-3 flex items-center gap-2 text-xs font-bold text-white">
                         <span className="grid size-7 place-items-center rounded-full" style={{ background: v.cor }}>

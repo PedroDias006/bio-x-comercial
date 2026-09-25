@@ -97,19 +97,20 @@ export default function PaginaResultados() {
             </h2>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pb-0">
             {t.comparacao.map(([titulo, texto], i) => ({
               id: `0${i + 1}`,
               titulo,
               texto,
               img: `/imagens/placeholder-lado-${i + 1}.jpg`,
             })).map((item) => (
-              <div key={item.id} className="group relative overflow-hidden rounded-[24px] bg-[#f4f9f9] border border-[#e0eaec]">
+              <div key={item.id} className="group relative w-[82vw] max-w-[340px] shrink-0 snap-start overflow-hidden rounded-[24px] bg-[#f4f9f9] border border-[#e0eaec] md:w-auto md:max-w-none">
                 <div className="relative h-56 w-full overflow-hidden">
                   <Image 
                     src={item.img} 
                     alt={item.titulo} 
-                    fill 
+                    fill
+                        sizes="(min-width: 768px) 33vw, 82vw" 
                     className="object-cover transition-transform duration-700 group-hover:scale-105" 
                   />
                   <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white font-bold text-[#00aabe] shadow-lg">
@@ -146,14 +147,14 @@ export default function PaginaResultados() {
             </p>
           </div>
 
-          <div className="flex flex-col gap-12">
+          <div className="-mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:flex-col md:gap-12 md:overflow-visible md:px-0 md:pb-0">
             {eventos.map((evento, index) => {
               const invertido = index % 2 === 1;
 
               return (
                 <article
                   key={evento.titulo}
-                  className="group relative overflow-hidden rounded-[32px] bg-white shadow-lg border border-[#e2eeee]"
+                  className="group relative w-[86vw] max-w-[390px] shrink-0 snap-start overflow-hidden rounded-[32px] bg-white shadow-lg border border-[#e2eeee] md:w-auto md:max-w-none"
                 >
                   <div className={`grid md:grid-cols-[1.2fr_1fr] lg:grid-cols-[1.5fr_1fr] ${invertido ? "md:[&>*:first-child]:order-2" : ""}`}>
                     
@@ -163,6 +164,7 @@ export default function PaginaResultados() {
                         src={evento.imagem} // <-- Caminho vem do evento
                         alt={evento.titulo}
                         fill
+                        sizes="(min-width: 1024px) 50vw, (min-width: 768px) 55vw, 86vw"
                         className="object-cover transition-transform duration-1000 group-hover:scale-105"
                       />
                       <div className="absolute left-6 top-6 rounded-full bg-white/95 px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-[#087b8b] shadow-md backdrop-blur-md">
@@ -257,6 +259,7 @@ export default function PaginaResultados() {
                       src={imgSrc} 
                       alt={`${t.fotoDe} ${depoimento.nome}`}
                       fill
+                        sizes="(min-width: 1024px) 340px, (min-width: 768px) 300px, 90vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent sm:bg-gradient-to-r" />

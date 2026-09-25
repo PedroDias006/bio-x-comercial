@@ -7,7 +7,8 @@
  * - O WhatsApp aparece sobreposto no vídeo da linha de suínos.
  * - O @ de Instagram/Facebook aparece no cartão final do institucional.
  *
- * O DDD 31 é de Belo Horizonte e região metropolitana, mas NÃO temos o
+ * Número oficial trocado em 25/09/2026 para (34) 99939-4444 (WhatsApp e telefone).
+ * NÃO temos o
  * endereço físico da empresa em nenhum dos arquivos. Enquanto ele não vier,
  * `endereco` fica nulo e os componentes simplesmente não renderizam o bloco.
  */
@@ -33,9 +34,18 @@ const mensagensWhatsapp: Record<Idioma, string> = {
   es: "¡Hola! Llegué por el sitio de BIO-X y quiero saber más sobre la tecnología.",
 };
 
+/** Número oficial da BIO-X (WhatsApp e telefone), definido em 25/09/2026. */
+export const numeroWhatsapp = "5534999394444";
+export const telefoneExibido = "(34) 99939-4444";
+
+/** Link do WhatsApp com uma mensagem qualquer já escrita. */
+export function urlWhatsappComTexto(texto: string) {
+  return `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(texto)}`;
+}
+
 /** Link do WhatsApp com a mensagem já escrita no idioma do visitante. */
 export function urlWhatsappEm(idioma: Idioma) {
-  return `https://wa.me/5531998129478?text=${encodeURIComponent(mensagensWhatsapp[idioma])}`;
+  return `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(mensagensWhatsapp[idioma])}`;
 }
 
 export const urlWhatsapp = urlWhatsappEm("pt");
@@ -44,7 +54,7 @@ export const canaisDeContato: CanalDeContato[] = [
   {
     id: "whatsapp",
     rotulo: "WhatsApp",
-    valor: "(31) 99812-9478",
+    valor: telefoneExibido,
     href: urlWhatsapp,
     observacao: "Canal mais rápido",
     externo: true,
@@ -54,12 +64,6 @@ export const canaisDeContato: CanalDeContato[] = [
     rotulo: "E-mail",
     valor: "biox@bioxmicroorganismos.com.br",
     href: "mailto:biox@bioxmicroorganismos.com.br?subject=Contato%20pelo%20site",
-  },
-  {
-    id: "telefone",
-    rotulo: "Telefone",
-    valor: "(31) 2010-6080",
-    href: "tel:+553120106080",
   },
 ];
 

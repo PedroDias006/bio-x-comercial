@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
+import { preload } from "react-dom";
 import { Cabecalho } from "@/componentes/estrutura/Cabecalho";
 import { Rodape } from "@/componentes/estrutura/Rodape";
 import { SuporteBiox } from "@/componentes/estrutura/SuporteBiox";
 import { urlDoSite } from "@/dados/site";
 import { alternativas, codigoIso, ehIdioma, idiomas, type Idioma } from "@/i18n/config";
 import { ProvedorIdioma } from "@/i18n/ProvedorIdioma";
+import { ProvedorContato } from "@/componentes/contato/JanelaDeContato";
 import "../globals.css";
 
 /** As três versões são geradas no build; prefixo desconhecido vira 404 abaixo. */
@@ -82,10 +84,15 @@ export default async function LayoutDoIdioma({
   const { idioma } = await params;
   if (!ehIdioma(idioma)) notFound();
 
+  /* A fonte começa a baixar junto com o HTML, sem esperar o CSS — o texto
+     aparece já na fonte certa, sem "pulo", mesmo no 4G. */
+  preload("/fonts/manrope-latin-variable.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
+
   return (
     <html lang={codigoIso[idioma]} data-scroll-behavior="smooth">
       <body>
         <ProvedorIdioma idioma={idioma}>
+          <ProvedorContato>
           <a href="#conteudo" className="link-pular">
             {textos[idioma].pular}
           </a>
@@ -93,6 +100,7 @@ export default async function LayoutDoIdioma({
           <main id="conteudo">{children}</main>
           <Rodape idioma={idioma} />
           <SuporteBiox />
+          </ProvedorContato>
         </ProvedorIdioma>
       </body>
     </html>

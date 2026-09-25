@@ -144,6 +144,7 @@ export default async function PaginaDaSolucao({ params }: Props) {
   const whatsapp = urlWhatsappEm(idioma);
   const categoria = nomeDaCategoria(solucao.categoria, idioma);
   const visual = visualDa(solucao.slug);
+  const Simbolo = visual.simbolo;
   const numeros = numerosDa(solucao, t);
   const temBeneficios = solucao.beneficios.length > 0;
   const outras = solucoesEm(idioma).filter((item) => item.slug !== solucao.slug);
@@ -331,7 +332,9 @@ export default async function PaginaDaSolucao({ params }: Props) {
                   >
                     <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full border border-black/10" />
                     <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full border border-black/10" />
-                    <FotoIcone src={visual.icone} tamanho="p" />
+                    <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-black/10">
+                      <Simbolo size={24} strokeWidth={1.8} aria-hidden="true" />
+                    </span>
                     <div className="relative">
                       <p className="text-5xl font-bold tracking-[-0.05em] lg:text-6xl">100%</p>
                       <p className="mt-2 text-sm font-semibold leading-snug">
@@ -446,7 +449,7 @@ export default async function PaginaDaSolucao({ params }: Props) {
             <div className="grid overflow-hidden rounded-[40px] border border-black/[0.05] bg-white text-[#10160f] shadow-[0_30px_60px_-40px_rgba(0,0,0,0.35)] lg:grid-cols-12">
               <div className="relative min-h-[320px] lg:col-span-5">
                 <Image
-                  src="/imagens/hero/microscopio.jpg"
+                  src={visual.composicao}
                   alt=""
                   fill
                   sizes="(min-width: 1024px) 40vw, 100vw"
@@ -498,17 +501,16 @@ export default async function PaginaDaSolucao({ params }: Props) {
       {/* ================= 6. CHAMADA FINAL ================= */}
       <section className="relative isolate overflow-hidden py-28 text-white lg:py-40">
         <Image
-          src={visual.fundo}
+          src={visual.chamada}
           alt=""
           fill
           sizes="100vw"
           className="-z-20 object-cover saturate-[1.2]"
-          style={{ objectPosition: visual.foco }}
         />
         <div className="absolute inset-0 -z-10 bg-black/35" />
 
         <Conteiner className={`text-center ${sombraTexto}`}>
-          <div className="mx-auto flex w-fit"><FotoIcone src={visual.icone} tamanho="g" /></div>
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[var(--cor)] text-black/80 shadow-[0_8px_30px_rgba(0,0,0,0.45)] [text-shadow:none]"><Simbolo size={36} strokeWidth={1.7} aria-hidden="true" /></div>
           <h2 className="mx-auto mt-8 max-w-4xl text-[clamp(2.4rem,5vw,5rem)] font-bold leading-[0.98] tracking-[-0.045em]">
             {t.querVer.replace("{nome}", solucao.nome)}{" "}
             <span className="text-[var(--cor)]">{t.cenario}</span>
@@ -552,24 +554,24 @@ export default async function PaginaDaSolucao({ params }: Props) {
           <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
             {outras.map((item) => {
               const v = visualDa(item.slug);
+              const SimboloOutra = v.simbolo;
               return (
                 <Link
                   key={item.slug}
                   href={rota(idioma, `/solucoes/${item.slug}`)}
                   style={comCor(v)}
-                  className="group relative isolate flex aspect-[4/5] flex-col justify-between overflow-hidden rounded-3xl p-5 text-white shadow-[0_20px_40px_-28px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:-translate-y-1"
+                  className="group relative isolate flex aspect-[4/5] flex-col justify-between overflow-hidden rounded-3xl bg-[linear-gradient(150deg,var(--cor-escura),color-mix(in_srgb,var(--cor-escura)_55%,#10160f))] p-5 text-white shadow-[0_20px_40px_-28px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:-translate-y-1"
                 >
-                  <Image
-                    src={v.fundo}
-                    alt=""
-                    fill
-                    sizes="(min-width: 1024px) 25vw, 50vw"
-                    className="-z-10 object-cover saturate-[1.15] transition-transform duration-700 group-hover:scale-110"
-                    style={{ objectPosition: v.foco }}
+                  <SimboloOutra
+                    aria-hidden="true"
+                    strokeWidth={1.1}
+                    className="absolute -bottom-8 -right-8 -z-10 h-44 w-44 text-white/15 transition-transform duration-700 group-hover:-rotate-6 group-hover:scale-110"
                   />
-                  <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-black/65 to-transparent" />
+                  <div className="absolute -left-12 -top-12 -z-10 h-36 w-36 rounded-full bg-[var(--cor)] opacity-25 blur-2xl" />
                   <div className="flex items-center justify-between">
-                    <FotoIcone src={v.icone} tamanho="p" />
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--cor)] text-black/75">
+                      <SimboloOutra size={20} strokeWidth={1.9} aria-hidden="true" />
+                    </span>
                     <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur-md transition-colors group-hover:bg-[var(--cor)] group-hover:text-black">
                       <ArrowUpRight size={16} />
                     </span>

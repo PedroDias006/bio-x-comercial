@@ -80,7 +80,7 @@ export default async function PaginaSobre({ params }: Props) {
             <div className="relative min-h-[520px] lg:min-h-[640px]">
               <div className="absolute right-0 top-0 h-[88%] w-[88%] overflow-hidden rounded-[38px] shadow-2xl">
                 <Image
-                  src="/imagens/dia-de-campo-grupo.jpg"
+                  src="/imagens/sobre/estande-biox.jpg"
                   alt={t.altDiaCampo}
                   fill
                   priority

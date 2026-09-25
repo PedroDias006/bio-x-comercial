@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { Bird, Droplets, Beef, PiggyBank, Sprout, type LucideIcon } from "lucide-react";
 
 /**
  * Identidade visual de cada solução — usada na listagem (/solucoes) e na
@@ -11,6 +12,11 @@ import type { CSSProperties } from "react";
  * - `foco`: onde fica o assunto da foto (object-position)
  * - `lado`: de que lado fica o texto na listagem
  * - `galeria`: fotos extras mostradas na página do produto
+ * - `simbolo`: ícone desenhado, usado nos cartões (evita repetir a foto do ícone)
+ * - `composicao`: foto do bloco de composição (uma diferente por produto)
+ * - `chamada`: foto de fundo da chamada final (diferente do fundo do topo)
+ *
+ * Regra da casa: nenhuma foto se repete no site. Cada arquivo tem um só lugar.
  *
  * Para trocar uma foto, basta salvar outra por cima do mesmo arquivo em
  * /public/imagens/solucoes.
@@ -23,6 +29,9 @@ export type VisualSolucao = {
   foco: string;
   lado: "esquerda" | "direita";
   galeria: string[];
+  simbolo: LucideIcon;
+  composicao: string;
+  chamada: string;
 };
 
 const pasta = "/imagens/solucoes";
@@ -40,6 +49,9 @@ export const visualDasSolucoes: Record<string, VisualSolucao> = {
     foco: "50% 60%",
     lado: "esquerda",
     galeria: fotos("agricultura-unica", 6),
+    simbolo: Sprout,
+    composicao: `${pasta}/composicao-agricultura-unica.jpg`,
+    chamada: `${pasta}/cta-agricultura-unica.jpg`,
   },
   saneamento: {
     icone: `${pasta}/icone-saneamento.jpg`,
@@ -49,6 +61,9 @@ export const visualDasSolucoes: Record<string, VisualSolucao> = {
     foco: "40% 55%",
     lado: "direita",
     galeria: fotos("saneamento", 3),
+    simbolo: Droplets,
+    composicao: `${pasta}/composicao-saneamento.jpg`,
+    chamada: `${pasta}/cta-saneamento.jpg`,
   },
   "saude-do-gado": {
     icone: `${pasta}/icone-saude-do-gado.jpg`,
@@ -57,7 +72,10 @@ export const visualDasSolucoes: Record<string, VisualSolucao> = {
     fundo: `${pasta}/fundo-saude-do-gado.jpg`,
     foco: "65% 60%",
     lado: "esquerda",
-    galeria: fotos("saude-do-gado", 3),
+    galeria: fotos("saude-do-gado", 4),
+    simbolo: Beef,
+    composicao: `${pasta}/composicao-saude-do-gado.jpg`,
+    chamada: `${pasta}/cta-saude-do-gado.jpg`,
   },
   "saude-unica-suinos": {
     icone: `${pasta}/icone-saude-unica-suinos.jpg`,
@@ -66,7 +84,10 @@ export const visualDasSolucoes: Record<string, VisualSolucao> = {
     fundo: `${pasta}/fundo-saude-unica-suinos.jpg`,
     foco: "30% 50%",
     lado: "direita",
-    galeria: fotos("saude-unica-suinos", 1),
+    galeria: fotos("saude-unica-suinos", 5),
+    simbolo: PiggyBank,
+    composicao: `${pasta}/composicao-saude-unica-suinos.jpg`,
+    chamada: `${pasta}/cta-saude-unica-suinos.jpg`,
   },
   "saude-unica-aves": {
     icone: `${pasta}/icone-saude-unica-aves.jpg`,
@@ -76,6 +97,9 @@ export const visualDasSolucoes: Record<string, VisualSolucao> = {
     foco: "75% 70%",
     lado: "esquerda",
     galeria: fotos("saude-unica-aves", 5),
+    simbolo: Bird,
+    composicao: `${pasta}/composicao-saude-unica-aves.jpg`,
+    chamada: `${pasta}/cta-saude-unica-aves.jpg`,
   },
 };
 

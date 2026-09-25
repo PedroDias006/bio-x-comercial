@@ -37,8 +37,9 @@ export function Rodape({ idioma }: { idioma: Idioma }) {
             <Image
               src="/imagens/logos/biox-logo-branco.png"
               alt="BIO-X Microorganismos"
-              width={1774}
-              height={887}
+              width={720}
+              height={360}
+              sizes="112px"
               className="h-14 w-auto"
             />
             <p className="mt-6 max-w-xs text-sm leading-6 text-white/70">

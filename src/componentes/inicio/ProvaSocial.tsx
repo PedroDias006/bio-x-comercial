@@ -11,6 +11,13 @@ import styles from "./ProvaSocial.module.css";
 import { rota, type Idioma } from "@/i18n/config";
 import { useIdioma } from "@/i18n/ProvedorIdioma";
 
+/**
+ * O mapa pinta cada estado com uma foto minúscula; usar a foto grande ali
+ * baixava ~3,5 MB à toa. As miniaturas ficam em /imagens/presenca/mapa/.
+ */
+const miniaturaDoMapa = (foto: string) =>
+  foto.replace("/presenca/", "/presenca/mapa/").replace(/\.jpe?g$/, ".webp");
+
 /** Chaves em português (batem com o mapa-brasil.json); o rótulo é traduzido. */
 const regioes = ["Todas", "Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"];
 
@@ -108,6 +115,17 @@ export function ProvaSocial() {
         <div className="mt-9 flex flex-wrap gap-2" aria-label={t.filtrar}>
           {regioes.map((item) => <button key={item} type="button" aria-pressed={regiao === item} onClick={() => escolherRegiao(item)} className={`min-h-11 rounded-full px-5 text-sm font-medium transition ${regiao === item ? "bg-[var(--biox-950)] text-white" : "bg-[var(--fundo)] text-[var(--texto-suave)] hover:bg-[var(--linha)]"}`}>{t.regioes[item]}</button>)}
         </div>
+        <div className="mt-5 lg:hidden">
+          <select
+            aria-label={t.irDireto}
+            value={selecionado}
+            onChange={(e) => escolherEstado(e.target.value)}
+            className="min-h-12 w-full rounded-xl border border-[var(--linha)] bg-white px-3 text-base"
+          >
+            <option value="">{t.irDireto} ({t.selecione.toLocaleLowerCase(idioma)})</option>
+            {visiveis.map((item) => <option key={item.id} value={item.id}>{item.nome}</option>)}
+          </select>
+        </div>
         <div className={`mt-6 grid overflow-hidden rounded-[28px] border border-[var(--linha)] lg:grid-cols-[1.65fr_.75fr] ${styles.painel}`}>
           <div className={`relative p-4 sm:p-7 ${styles.areaMapa}`}>
             <div className="flex items-center justify-between gap-3">
@@ -122,7 +140,7 @@ export function ProvaSocial() {
               <defs>
                 {Object.entries(presencas).map(([id, item]) => (
                   <pattern key={id} id={`foto-${id}`} width="1" height="1" patternContentUnits="objectBoundingBox">
-                    <image href={item.imagem} width="1" height="1" preserveAspectRatio="xMidYMid slice" />
+                    <image href={miniaturaDoMapa(item.imagem)} width="1" height="1" preserveAspectRatio="xMidYMid slice" />
                     <rect width="1" height="1" fill={selecionado === id ? "rgba(3, 29, 39, .16)" : "rgba(3, 29, 39, .34)"} />
                   </pattern>
                 ))}
@@ -140,9 +158,11 @@ export function ProvaSocial() {
             <div className="flex flex-wrap gap-4 text-xs text-[var(--texto-suave)]"><span className="flex items-center gap-2"><i className={`size-3 rounded-full ${styles.amostraFoto}`} />{t.legendaCom}</span><span className="flex items-center gap-2"><i className="size-2.5 rounded-full bg-[#dce6e8]" />{t.legendaSem}</span></div>
             <a href="https://servicodados.ibge.gov.br/api/docs/malhas?versao=3" target="_blank" rel="noreferrer" className="mt-3 inline-block text-xs text-[var(--texto-suave)] underline underline-offset-2">{t.base}</a>
           </div>
-          <div className={`p-6 sm:p-9 ${styles.lateral}`}>
-            <label htmlFor="estado-biox" className="text-xs font-semibold uppercase tracking-[.14em] text-[var(--texto-suave)]">{t.irDireto}</label>
-            <select id="estado-biox" value={selecionado} onChange={(e) => escolherEstado(e.target.value)} className="mt-3 w-full rounded-xl border border-[var(--linha)] bg-white p-3 text-base"><option value="">{t.selecione}</option>{visiveis.map((item) => <option key={item.id} value={item.id}>{item.nome}</option>)}</select>
+          <div className={`${estado ? "block" : "hidden"} p-6 sm:p-9 lg:block ${styles.lateral}`}>
+            <div className="hidden lg:block">
+              <label htmlFor="estado-biox" className="text-xs font-semibold uppercase tracking-[.14em] text-[var(--texto-suave)]">{t.irDireto}</label>
+              <select id="estado-biox" value={selecionado} onChange={(e) => escolherEstado(e.target.value)} className="mt-3 w-full rounded-xl border border-[var(--linha)] bg-white p-3 text-base"><option value="">{t.selecione}</option>{visiveis.map((item) => <option key={item.id} value={item.id}>{item.nome}</option>)}</select>
+            </div>
             <div id="presenca-detalhe" className="mt-7" aria-live="polite" aria-atomic="true">
               {!estado ? (
                 <div className={styles.estadoVazio}><span><MousePointer2 size={22} aria-hidden="true" /></span><h3>{t.escolha}</h3><p>{t.escolhaApoio}</p></div>

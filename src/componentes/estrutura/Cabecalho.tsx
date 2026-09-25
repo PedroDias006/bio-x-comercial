@@ -65,8 +65,8 @@ export function Cabecalho() {
           <Image
             src="/imagens/logos/biox-logo.png"
             alt="BIO-X Microorganismos"
-            width={1774}
-            height={887}
+            width={720}
+            height={360}
             priority
             sizes="(min-width: 1024px) 180px, 140px"
             className="logo-nav"
