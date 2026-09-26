@@ -7,3 +7,8 @@ build/
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store
+
+# backup das imagens antes da otimização (não vai para o site)
+originais-imagens/
+# pasta vazia com um .git dentro; atrapalha o "git add"
+bio-x/
