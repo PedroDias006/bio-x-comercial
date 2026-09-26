@@ -74,11 +74,11 @@ export const missaoVisaoValores = [
 
 /** Menu principal. A ordem é a que aparece no cabeçalho e no rodapé. */
 const rotulosDoMenu: Record<Idioma, string[]> = {
-  pt: ["A BIO-X", "Soluções", "Resultados", "Clientes", "Na mídia"],
-  en: ["About BIO-X", "Solutions", "Results", "Clients", "In the media"],
-  es: ["BIO-X", "Soluciones", "Resultados", "Clientes", "En los medios"],
+  pt: ["A BIO-X", "Soluções", "Resultados", "Clientes"],
+  en: ["About BIO-X", "Solutions", "Results", "Clients"],
+  es: ["BIO-X", "Soluciones", "Resultados", "Clientes"],
 };
-const enderecosDoMenu = ["/sobre", "/solucoes", "/resultados", "/clientes", "/na-midia"];
+const enderecosDoMenu = ["/sobre", "/solucoes", "/resultados", "/clientes"];
 
 /** Menu no idioma pedido. `href` é o caminho base, sem prefixo de idioma. */
 export function navegacaoEm(idioma: Idioma) {

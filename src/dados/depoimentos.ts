@@ -63,23 +63,6 @@ export const depoimentos: Depoimento[] = [
   },
 ];
 
-export type Materia = {
-  veiculo: string;
-  titulo: string;
-  data: string;
-  /** ISO, para o <time dateTime>. */
-  dataIso: string;
-  url?: string;
-};
-
-export const naMidia: Materia[] = [
-  {
-    veiculo: "TV Paranaíba",
-    titulo: "Agricultura regenerativa: técnica traz benefícios econômicos",
-    data: "24 de março de 2024",
-    dataIso: "2024-03-24",
-  },
-];
 
 /** Eventos e ações de campo — material para a página de resultados. */
 export const eventos = [
@@ -137,15 +120,4 @@ export function depoimentosEm(idioma: Idioma): Depoimento[] {
 export function eventosEm(idioma: Idioma) {
   if (idioma === "pt") return eventos;
   return eventos.map((e, i) => ({ ...e, ...eventosTraduzidos[idioma][i] }));
-}
-
-/** Matérias com a data escrita no idioma. O título da matéria fica no original. */
-export function naMidiaEm(idioma: Idioma): Materia[] {
-  const formato = new Intl.DateTimeFormat(idioma === "pt" ? "pt-BR" : idioma, {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  });
-  return naMidia.map((m) => ({ ...m, data: formato.format(new Date(m.dataIso)) }));
 }

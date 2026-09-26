@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Hero } from "@/componentes/inicio/Hero";
+import { InstituicoesParceiras } from "@/componentes/inicio/InstituicoesParceiras";
 import { Pilares } from "@/componentes/inicio/Pilares";
 import { VitrineDeLinhas } from "@/componentes/inicio/VitrineDeLinhas";
 import { ProvaSocial } from "@/componentes/inicio/ProvaSocial";
@@ -20,6 +21,7 @@ export default async function PaginaInicial({ params }: Props) {
   return (
     <>
       <Hero />
+      <InstituicoesParceiras idioma={idioma} />
       <VitrineDeLinhas />
       <Pilares />
       <ProvaSocial />

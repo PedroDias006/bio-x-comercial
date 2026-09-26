@@ -1,0 +1,33 @@
+.secao { position: relative; overflow: hidden; padding-block: 1.4rem; border-block: 1px solid #d8e7e8; background: #fff; }
+.composicao { display: grid; grid-template-columns: 250px minmax(0, 1fr); align-items: center; }
+.rotulo { position: relative; z-index: 2; align-self: stretch; display: flex; align-items: center; gap: 14px; padding: 6px 26px 6px 32px; border-right: 1px solid rgba(8, 122, 133, .18); background: #fff; }
+.rotulo > span { width: 24px; height: 2px; flex-shrink: 0; border-radius: 99px; background: var(--biox-turquesa); }
+.rotulo h2 { margin: 0; color: var(--biox-950); font-size: 12px; font-weight: 760; text-transform: uppercase; letter-spacing: .18em; line-height: 1.35; }
+.rotulo p { margin: 4px 0 0; color: #6c868f; font-size: 12px; line-height: 1.35; }
+.janela { min-width: 0; overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent); }
+/* A lista tem 4 cópias; andar metade dela (2 cópias) fecha o loop sem emenda. */
+.trilho { display: flex; align-items: center; width: max-content; margin: 0; padding: 0; list-style: none; animation: correr 48s linear infinite; will-change: transform; }
+.trilho:hover { animation-play-state: paused; }
+.trilho li { display: grid; place-items: center; width: 200px; height: 84px; margin-right: 40px; }
+.trilho img { width: 172px; height: 62px; object-fit: contain; }
+.trilho li[data-logo="ufv"] img { height: 80px; }
+.trilho li[data-logo="uniube"] img,
+.trilho li[data-logo="mineragro"] img { height: 70px; }
+@keyframes correr { to { transform: translateX(-50%); } }
+@media (max-width: 639px) {
+  .secao { padding-block: 1rem; }
+  .composicao { grid-template-columns: 118px minmax(0, 1fr); }
+  .rotulo { gap: 8px; padding: 6px 10px 6px 14px; }
+  .rotulo > span { display: none; }
+  .rotulo h2 { font-size: 10px; letter-spacing: .12em; }
+  .rotulo p { display: none; }
+  .trilho { animation-duration: 40s; }
+  .trilho li { width: 150px; height: 66px; margin-right: 24px; }
+  .trilho img { width: 132px; height: 48px; }
+  .trilho li[data-logo="ufv"] img { height: 62px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .janela { overflow-x: auto; mask-image: none; scrollbar-width: none; }
+  .trilho { animation: none; }
+  .trilho li[aria-hidden="true"] { display: none; }
+}
